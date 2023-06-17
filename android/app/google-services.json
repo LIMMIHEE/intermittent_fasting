@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "617101945828",
+    "firebase_url": "https://intermittent-fasting-b72f4-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "intermittent-fasting-b72f4",
+    "storage_bucket": "intermittent-fasting-b72f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617101945828:android:15975fb9aa29f57acc75f1",
+        "android_client_info": {
+          "package_name": "com.mirimhee.intermittent_fasting.intermittent_fasting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617101945828-jk8m0hn73747g6qt2ahg7tcc1lina0st.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-h_uL9rYKwEjFnyiuD0UX37JbnkDu0ko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617101945828-jk8m0hn73747g6qt2ahg7tcc1lina0st.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "617101945828-iq9qkcgg8sf7ei4do8hn027dj2hh1g84.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mirimhee.intermittentfasting.intermittentFasting"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
