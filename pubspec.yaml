@@ -17,6 +17,7 @@ dependencies:
   firebase_analytics: ^10.4.2
   flutter_svg: 2.0.5
   intl: ^0.18.1
+  jelly_anim: ^0.0.7
 
 dev_dependencies:
   flutter_test:

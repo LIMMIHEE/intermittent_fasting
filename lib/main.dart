@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/Screen/HomeScreen.dart';
+import 'package:intermittent_fasting/Screen/StartScreen.dart';
 import 'package:intermittent_fasting/Utils/FirebaseUtils.dart';
 
 void main() {
@@ -14,7 +15,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   final FirebaseUtils firebaseUtils = FirebaseUtils();
 
   @override
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: StartScreen(),
     );
   }
 }
