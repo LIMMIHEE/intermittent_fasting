@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/Screen/HomeScreen.dart';
 import 'package:intermittent_fasting/Screen/StartScreen.dart';
 import 'package:intermittent_fasting/Utils/FirebaseUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'Utils/Globals.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  prefs = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 

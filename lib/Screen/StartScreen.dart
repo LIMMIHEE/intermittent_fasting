@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/Screen/FastingRateScreen.dart';
 import 'package:intermittent_fasting/widget/StartWidget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
+
+import '../Service/FirebaseAuthService.dart';
+import '../Utils/Utils.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -47,6 +51,9 @@ class OverlappingWidget extends StatefulWidget {
 }
 
 class StartWidgetState extends State<OverlappingWidget> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     if (widget.status == "signUp") return signUpWidget();
@@ -178,8 +185,8 @@ class StartWidgetState extends State<OverlappingWidget> {
                     child: Padding(
                   padding: const EdgeInsets.only(top: 120),
                   child: Column(
-                    children: const [
-                      Padding(
+                    children: [
+                      const Padding(
                         padding: EdgeInsets.only(bottom: 40),
                         child: Text(
                           '회원가입',
@@ -193,10 +200,12 @@ class StartWidgetState extends State<OverlappingWidget> {
                       SignUpTextField(
                         hintText: '메일주소',
                         icon: Icons.mail_outline_rounded,
+                        controller: emailController,
                       ),
                       SignUpTextField(
                         hintText: '비밀번호',
                         icon: Icons.vpn_key_outlined,
+                        controller: passwordController,
                       ),
                     ],
                   ),
@@ -211,7 +220,26 @@ class StartWidgetState extends State<OverlappingWidget> {
                     ),
                   ),
                   onTap: () {
-                    onTap("fastingSet");
+                    if (!RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(emailController.text)) {
+                      Utils().showSnackBar(context, "정확한 이메일을 입력해주세요!");
+                      return;
+                    }
+
+                    if (passwordController.text.length < 6) {
+                      Utils().showSnackBar(context, "비밀번호를 6글자 이상 설정해주세요!");
+                      return;
+                    }
+
+                    FirebaseAuthService()
+                        .signUpEmail(
+                            email: emailController.text,
+                            password: passwordController.text,
+                            context: context)
+                        .then((value) {
+                      onTap("fastingSet");
+                    });
                   },
                 )
               ],

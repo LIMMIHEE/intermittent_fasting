@@ -14,10 +14,12 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   firebase_core: ^2.13.1
-  firebase_analytics: ^10.4.2
+  firebase_analytics: ^10.4.3
+  firebase_auth: 4.6.1
   flutter_svg: 2.0.5
   intl: ^0.18.1
   jelly_anim: ^0.0.7
+  shared_preferences: 2.1.0
 
 dev_dependencies:
   flutter_test:
