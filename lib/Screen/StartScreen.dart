@@ -63,8 +63,11 @@ class StartWidgetState extends State<OverlappingWidget> {
 
   void onTap(String status) {
     if (status == "fastingSet") {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const FastingRateScreen()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const FastingRateScreen(comeStartScreen: true)));
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

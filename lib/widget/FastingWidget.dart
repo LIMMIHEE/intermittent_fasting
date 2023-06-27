@@ -64,9 +64,13 @@ class FastingTab extends StatelessWidget {
 
 class FastingGridView extends StatelessWidget {
   const FastingGridView(
-      {super.key, required this.fastingMap, required this.onTap});
+      {super.key,
+      required this.fastingMap,
+      required this.onTap,
+      required this.selectWidget});
 
-  final Map fastingMap;
+  final UniqueKey? selectWidget;
+  final Map<UniqueKey, List<String>> fastingMap;
   final Function onTap;
 
   @override
@@ -83,8 +87,10 @@ class FastingGridView extends StatelessWidget {
             crossAxisSpacing: 10,
           ),
           itemBuilder: (context, index) {
+            var widgetKey = fastingMap.keys.elementAt(index);
+            var isSelectWidget = selectWidget == widgetKey;
             return GestureDetector(
-              onTap: () => onTap(index),
+              onTap: () => onTap(index, widgetKey),
               child: Container(
                   decoration: ShapeDecoration(
                     color: Colors.white,
@@ -101,11 +107,18 @@ class FastingGridView extends StatelessWidget {
                   ),
                   child: Container(
                     decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            width: 1, color: Color(0xFF6E777B)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      color: isSelectWidget
+                          ? const Color(0xffFFB82E)
+                          : Colors.white,
+                      shape: isSelectWidget
+                          ? RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            )
+                          : RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  width: 1, color: Color(0xFF6E777B)),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 13),
@@ -114,9 +127,11 @@ class FastingGridView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            fastingMap.keys.elementAt(index),
-                            style: const TextStyle(
-                              color: Color(0xFF6E777B),
+                            fastingMap.values.elementAt(index).first,
+                            style: TextStyle(
+                              color: isSelectWidget
+                                  ? Colors.white
+                                  : const Color(0xFF6E777B),
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
@@ -124,9 +139,11 @@ class FastingGridView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              fastingMap.values.elementAt(index),
-                              style: const TextStyle(
-                                color: Color(0xFF9D9D9D),
+                              fastingMap.values.elementAt(index).last,
+                              style: TextStyle(
+                                color: isSelectWidget
+                                    ? Colors.white
+                                    : const Color(0xFF9D9D9D),
                                 fontSize: 12,
                               ),
                             ),

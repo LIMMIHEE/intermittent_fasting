@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ButtonTab extends StatelessWidget {
-  const ButtonTab({super.key,
-    required this.endAction,
-    required this.widgetChild});
+import '../Utils/Globals.dart';
+import '../Utils/Prefs.dart';
 
-  final Function() endAction;
+class ButtonTab extends StatelessWidget {
+  const ButtonTab(
+      {super.key,
+      required this.timerAction,
+      required this.widgetChild,
+      required this.timerActive});
+
+  final bool timerActive;
+  final Function() timerAction;
   final List<Widget> widgetChild;
 
   @override
@@ -18,8 +24,7 @@ class ButtonTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 19),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(16),
-                topLeft: Radius.circular(16)),
+                topRight: Radius.circular(16), topLeft: Radius.circular(16)),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
@@ -33,8 +38,7 @@ class ButtonTab extends StatelessWidget {
             children: [
               ...widgetChild,
               Padding(
-                padding:
-                EdgeInsets.only(top: widgetChild.isNotEmpty ? 15 : 0),
+                padding: EdgeInsets.only(top: widgetChild.isNotEmpty ? 15 : 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -63,7 +67,7 @@ class ButtonTab extends StatelessWidget {
         Positioned(
           bottom: 186,
           child: GestureDetector(
-            onTap: endAction,
+            onTap: () => timerAction(),
             child: Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -85,18 +89,18 @@ class ButtonTab extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
-                      "종료",
-                      style: TextStyle(
+                      timerActive ? "종료" : "시작",
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w600),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 3),
+                      padding: const EdgeInsets.only(left: 3),
                       child: Icon(
-                        Icons.pause,
+                        timerActive ? Icons.pause : Icons.play_arrow_rounded,
                         color: Colors.white,
                       ),
                     )
@@ -132,10 +136,7 @@ class ButtonTabItem extends StatelessWidget {
 }
 
 class FastingRatioLabel extends StatelessWidget {
-  const FastingRatioLabel({
-    super.key,
-    this.editIcon = false
-  });
+  const FastingRatioLabel({super.key, this.editIcon = false});
 
   final bool editIcon;
 
@@ -143,30 +144,37 @@ class FastingRatioLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: editIcon ? 90 : 70,
-      padding: EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Color(0xffffb72d), width: 1, ),
+        border: Border.all(
+          color: Color(0xffffb72d),
+          width: 1,
+        ),
         color: Colors.white,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "16:4",
+            prefs.getString(Prefs().FASTINGTIMERATIO),
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xffffb72d),
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
           Visibility(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Icon(Icons.edit, color: Color(0xffffb72d),size: 18,),
-            ),
             visible: editIcon,
+            child: const Padding(
+              padding: EdgeInsets.only(left: 4),
+              child: Icon(
+                Icons.edit,
+                color: Color(0xffffb72d),
+                size: 18,
+              ),
+            ),
           )
         ],
       ),

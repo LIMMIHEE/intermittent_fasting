@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/Screen/HomeScreen.dart';
+import 'package:intermittent_fasting/Utils/Globals.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
+import '../Utils/Prefs.dart';
 import '../widget/FastingWidget.dart';
 
 class FastingRateScreen extends StatefulWidget {
-  const FastingRateScreen({Key? key}) : super(key: key);
+  const FastingRateScreen({Key? key, required this.comeStartScreen})
+      : super(key: key);
+
+  final bool comeStartScreen;
 
   @override
   State<FastingRateScreen> createState() => _FastingRateScreenState();
@@ -13,23 +19,21 @@ class FastingRateScreen extends StatefulWidget {
 class _FastingRateScreenState extends State<FastingRateScreen>
     with TickerProviderStateMixin {
   final dayTimeFasting = {
-    "12:12": "12시간 단식 12시간 식사",
-    "14:10": "14시간 단식 10시간 식사",
-    "16:8": "16시간 단식 8시간 식사",
-    "18:6": "18시간 단식 6시간 식사",
-    "20:4": "20시간 단식 4시간 식사",
-    "커스텀": "원하는 비율로 설정",
+    UniqueKey(): ["12:12", "12시간 단식 12시간 식사"],
+    UniqueKey(): ["14:10", "14시간 단식 10시간 식사"],
+    UniqueKey(): ["16:8", "16시간 단식 8시간 식사"],
+    UniqueKey(): ["18:6", "18시간 단식 6시간 식사"],
+    UniqueKey(): ["20:4", "20시간 단식 4시간 식사"],
   };
   final dayFasting = {
-    "24시간": "1일 단식",
-    "36시간": "1.5일 단식",
-    "48시간": "2일 단식",
-    "커스텀": "원하는 시간으로 설정",
+    UniqueKey(): ["24시간", "1일 단식"],
+    UniqueKey(): ["36시간", "1.5일 단식"],
+    UniqueKey(): ["48시간", "2일 단식"],
   };
 
   late TabController _tabController;
   var isSelect = false;
-  var selectTab = 0;
+  UniqueKey? selectWigetKey;
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +66,7 @@ class _FastingRateScreenState extends State<FastingRateScreen>
               ),
               TabBar(
                 onTap: (index) {
-                  if (index != selectTab) {
-                    setState(() {
-                      selectTab = index;
-                    });
-                  }
+                  setState(() {});
                 },
                 tabs: [
                   FastingTab(
@@ -90,24 +90,37 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                   controller: _tabController,
                   children: [
                     FastingGridView(
+                        selectWidget: selectWigetKey,
                         fastingMap: dayTimeFasting,
-                        onTap: (index) {
-                          setState(() {
-                            selectTab = index;
-                          });
-                        }),
+                        onTap: gridTap),
                     FastingGridView(
+                        selectWidget: selectWigetKey,
                         fastingMap: dayFasting,
-                        onTap: (index) {
-                          setState(() {
-                            selectTab = index;
-                          });
-                        })
+                        onTap: gridTap)
                   ],
                 ),
               )),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  if (isSelect) {
+                    var selectFasting = _tabController.index == 0
+                        ? dayTimeFasting[selectWigetKey]?.first
+                        : dayFasting[selectWigetKey]?.first;
+
+                    prefs.setString(Prefs().FASTINGTIMERATIO, selectFasting);
+                    prefs.setInt(Prefs().FASTINGTIME,
+                        int.parse(selectFasting!.substring(0, 2)));
+
+                    widget.comeStartScreen
+                        ? Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()),
+                            (route) => false)
+                        : Navigator.pop(
+                            context, int.parse(selectFasting!.substring(0, 2)));
+                  }
+                },
                 child: Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width,
@@ -147,5 +160,12 @@ class _FastingRateScreenState extends State<FastingRateScreen>
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  void gridTap(int index, UniqueKey key) {
+    setState(() {
+      selectWigetKey = key;
+      if (!isSelect) isSelect = true;
+    });
   }
 }
