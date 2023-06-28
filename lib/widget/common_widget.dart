@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/Globals.dart';
-import '../Utils/Prefs.dart';
+import '../Utils/globals.dart';
+import '../Utils/prefs.dart';
 
 class ButtonTab extends StatelessWidget {
   const ButtonTab(
@@ -39,7 +39,7 @@ class ButtonTab extends StatelessWidget {
               ...widgetChild,
               Padding(
                 padding: EdgeInsets.only(top: widgetChild.isNotEmpty ? 15 : 0),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ButtonTabItem(
@@ -75,13 +75,13 @@ class ButtonTab extends StatelessWidget {
               child: Container(
                 width: 110,
                 height: 45,
-                margin: EdgeInsets.all(15),
+                margin: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: Color(0xffFFB82E),
+                  color: const Color(0xffFFB82E),
                   borderRadius: BorderRadius.circular(50),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xffFFB82E).withOpacity(0.2),
+                      color: const Color(0xffFFB82E).withOpacity(0.2),
                       blurRadius: 3,
                       offset: const Offset(0, 8),
                     ),
@@ -148,7 +148,7 @@ class FastingRatioLabel extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Color(0xffffb72d),
+          color: const Color(0xffffb72d),
           width: 1,
         ),
         color: Colors.white,

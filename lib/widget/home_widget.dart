@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/TimeUtils.dart';
+import '../Utils/time_utils.dart';
 
 
 class TimerTextContainer extends StatelessWidget {

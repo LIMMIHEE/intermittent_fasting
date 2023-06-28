@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/FastingRateScreen.dart';
-import 'package:intermittent_fasting/widget/StartWidget.dart';
+import 'package:intermittent_fasting/Screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/widget/start_widget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
-import '../Service/FirebaseAuthService.dart';
-import '../Utils/Utils.dart';
+import '../Service/firebase_auth_service.dart';
+import '../Utils/utils.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -84,11 +84,11 @@ class StartWidgetState extends State<OverlappingWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
+            const Expanded(
                 child: Padding(
-              padding: const EdgeInsets.only(top: 120),
+              padding: EdgeInsets.only(top: 120),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     '환영합니다!',
                     style: TextStyle(
@@ -127,9 +127,9 @@ class StartWidgetState extends State<OverlappingWidget> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: StartButton(
-                    childWidget: Column(
+                    childWidget: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           '웹으로도 사용할래요',
                           style: TextStyle(

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/FastingRateScreen.dart';
-import 'package:intermittent_fasting/Utils/Globals.dart';
+import 'package:intermittent_fasting/Screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/Utils/globals.dart';
 
-import '../Utils/Prefs.dart';
-import '../widget/CommonWidget.dart';
-import '../widget/HomeWidget.dart';
+import '../Utils/prefs.dart';
+import '../widget/common_widget.dart';
+import '../widget/home_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool fastingState = true;
   Timer? timer;
   int elapsedTime = 0;
-  int targetTime = Duration(hours: 16).inSeconds;
+  int targetTime = const Duration(hours: 16).inSeconds;
 
   void startTimer() {
     timer ??= Timer.periodic(const Duration(seconds: 1), (_) {
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     }
                   },
-                  child: FastingRatioLabel(editIcon: true),
+                  child: const FastingRatioLabel(editIcon: true),
                 ),
               ),
               TimerCircleProgress(
@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    TimerTextContainer(
+                    const TimerTextContainer(
                       timeText: "6/10 오후 6 : 26",
                       text: "시작시간",
                     ),
@@ -111,14 +111,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       'assets/images/time_arrow.png',
                       width: 35,
                     ),
-                    TimerTextContainer(
+                    const TimerTextContainer(
                         timeText: "6/10 오후 6 : 26",
                         text: "종료시간",
                         isEdit: false),
                   ],
                 ),
               ),
-              Divider()
+              const Divider()
             ],
           )
         ],

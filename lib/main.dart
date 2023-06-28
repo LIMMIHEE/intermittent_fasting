@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/HomeScreen.dart';
-import 'package:intermittent_fasting/Screen/StartScreen.dart';
-import 'package:intermittent_fasting/Utils/FirebaseUtils.dart';
+import 'package:intermittent_fasting/Screen/start_screen.dart';
+import 'package:intermittent_fasting/Utils/firebase_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Utils/Globals.dart';
+import 'Utils/globals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

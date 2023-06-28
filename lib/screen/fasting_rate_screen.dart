@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/HomeScreen.dart';
-import 'package:intermittent_fasting/Utils/Globals.dart';
+import 'package:intermittent_fasting/Screen/home_screen.dart';
+import 'package:intermittent_fasting/Utils/globals.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
-import '../Utils/Prefs.dart';
-import '../widget/FastingWidget.dart';
+import '../Utils/prefs.dart';
+import '../widget/fasting_widget.dart';
 
 class FastingRateScreen extends StatefulWidget {
   const FastingRateScreen({Key? key, required this.comeStartScreen})
@@ -128,7 +128,7 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                       const EdgeInsets.symmetric(horizontal: 39, vertical: 48),
                   padding: const EdgeInsets.symmetric(vertical: 19),
                   decoration: ShapeDecoration(
-                    color: isSelect ? Color(0xFFFFB72D) : Color(0xff9D9D9D),
+                    color: isSelect ? const Color(0xFFFFB72D) : const Color(0xff9D9D9D),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(88),
                     ),
