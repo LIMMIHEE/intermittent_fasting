@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/Screen/start_screen.dart';
 import 'package:intermittent_fasting/Utils/firebase_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Utils/globals.dart';
+import 'utils/globals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: StartScreen(),
+      home: const StartScreen(),
     );
   }
 }

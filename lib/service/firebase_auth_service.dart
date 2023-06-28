@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intermittent_fasting/Utils/globals.dart';
+import 'package:intermittent_fasting/utils/globals.dart';
 
-import '../Utils/prefs.dart';
-import '../Utils/utils.dart';
+import '../utils/prefs.dart';
+import '../utils/utils.dart';
 
 class FirebaseAuthService {
   final utils = Utils();
@@ -17,7 +17,7 @@ class FirebaseAuthService {
       await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        prefs?.setString(Prefs().UID, _firebaseAuth.currentUser?.uid ?? "");
+        prefs?.setString(Prefs().uid, _firebaseAuth.currentUser?.uid ?? "");
       });
     } on FirebaseAuthException catch (error) {
       print(error.message);

@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/Utils/globals.dart';
+import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/utils/globals.dart';
+import 'package:intermittent_fasting/screen/complete_screen.dart';
 
-import '../Utils/prefs.dart';
+import '../utils/prefs.dart';
 import '../widget/common_widget.dart';
 import '../widget/home_widget.dart';
 
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int targetTime = const Duration(hours: 16).inSeconds;
 
   void startTimer() {
-    timer ??= Timer.periodic(const Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => elapsedTime++);
     });
   }
@@ -31,14 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
     if (timer != null && timer!.isActive) {
       setState(() {
         timer?.cancel();
-        // 단식 완료 화면 혹은 식사 완료 화면으로 이동
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CompleteScreen(
+                    progressTime: elapsedTime,
+                    isFastingTimeDone: fastingState))).whenComplete(() {
+          elapsedTime = 0;
+          fastingState = !fastingState;
+          startTimer();
+        });
       });
     }
   }
 
   @override
   void initState() {
-    targetTime = Duration(hours: prefs.getInt(Prefs().FASTINGTIME)).inSeconds;
+    targetTime =
+        Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
     super.initState();
   }
 
@@ -100,22 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
             widgetChild: [
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const TimerTextContainer(
-                      timeText: "6/10 오후 6 : 26",
-                      text: "시작시간",
-                    ),
-                    Image.asset(
-                      'assets/images/time_arrow.png',
-                      width: 35,
-                    ),
-                    const TimerTextContainer(
-                        timeText: "6/10 오후 6 : 26",
-                        text: "종료시간",
-                        isEdit: false),
-                  ],
+                child: TimerRowContainer(
+                  startTime: '',
+                  endTime: '',
+                  editTime: fastingState ? 'end' : 'start',
                 ),
               ),
               const Divider()

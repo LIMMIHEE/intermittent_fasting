@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
 import 'package:intermittent_fasting/widget/start_widget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
-import '../Service/firebase_auth_service.dart';
-import '../Utils/utils.dart';
+import '../service/firebase_auth_service.dart';
+import '../utils/utils.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);

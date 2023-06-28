@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/Screen/home_screen.dart';
-import 'package:intermittent_fasting/Utils/globals.dart';
+import 'package:intermittent_fasting/screen/home_screen.dart';
+import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
-import '../Utils/prefs.dart';
+import '../utils/prefs.dart';
 import '../widget/fasting_widget.dart';
 
 class FastingRateScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _FastingRateScreenState extends State<FastingRateScreen>
 
   late TabController _tabController;
   var isSelect = false;
-  UniqueKey? selectWigetKey;
+  UniqueKey? selectWidgetKey;
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +90,11 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                   controller: _tabController,
                   children: [
                     FastingGridView(
-                        selectWidget: selectWigetKey,
+                        selectWidget: selectWidgetKey,
                         fastingMap: dayTimeFasting,
                         onTap: gridTap),
                     FastingGridView(
-                        selectWidget: selectWigetKey,
+                        selectWidget: selectWidgetKey,
                         fastingMap: dayFasting,
                         onTap: gridTap)
                   ],
@@ -104,11 +104,11 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                 onTap: () {
                   if (isSelect) {
                     var selectFasting = _tabController.index == 0
-                        ? dayTimeFasting[selectWigetKey]?.first
-                        : dayFasting[selectWigetKey]?.first;
+                        ? dayTimeFasting[selectWidgetKey]?.first as String
+                        : dayFasting[selectWidgetKey]?.first as String;
 
-                    prefs.setString(Prefs().FASTINGTIMERATIO, selectFasting);
-                    prefs.setInt(Prefs().FASTINGTIME,
+                    prefs.setString(Prefs().fastingTimeRatio, selectFasting);
+                    prefs.setInt(Prefs().fastingTime,
                         int.parse(selectFasting!.substring(0, 2)));
 
                     widget.comeStartScreen
@@ -128,7 +128,9 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                       const EdgeInsets.symmetric(horizontal: 39, vertical: 48),
                   padding: const EdgeInsets.symmetric(vertical: 19),
                   decoration: ShapeDecoration(
-                    color: isSelect ? const Color(0xFFFFB72D) : const Color(0xff9D9D9D),
+                    color: isSelect
+                        ? const Color(0xFFFFB72D)
+                        : const Color(0xff9D9D9D),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(88),
                     ),
@@ -164,7 +166,7 @@ class _FastingRateScreenState extends State<FastingRateScreen>
 
   void gridTap(int index, UniqueKey key) {
     setState(() {
-      selectWigetKey = key;
+      selectWidgetKey = key;
       if (!isSelect) isSelect = true;
     });
   }

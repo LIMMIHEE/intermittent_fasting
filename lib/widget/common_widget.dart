@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../Utils/globals.dart';
-import '../Utils/prefs.dart';
+import '../utils/globals.dart';
+import '../utils/prefs.dart';
 
 class ButtonTab extends StatelessWidget {
   const ButtonTab(
@@ -157,7 +157,7 @@ class FastingRatioLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            prefs.getString(Prefs().FASTINGTIMERATIO),
+            prefs.getString(Prefs().fastingTimeRatio) ?? '',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xffffb72d),
@@ -174,6 +174,95 @@ class FastingRatioLabel extends StatelessWidget {
                 color: Color(0xffffb72d),
                 size: 18,
               ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class TimerRowContainer extends StatelessWidget {
+  const TimerRowContainer({
+    super.key,
+    required this.startTime,
+    required this.endTime,
+    required this.editTime,
+  });
+
+  final String startTime;
+  final String endTime;
+  final String editTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        TimerTextContainer(
+            timeText: "6/10 오후 6 : 26",
+            text: "시작시간",
+            isEdit: editTime == "start"),
+        Image.asset(
+          'assets/images/icon_time_arrow.png',
+          width: 35,
+        ),
+        TimerTextContainer(
+            timeText: "6/10 오후 6 : 26",
+            text: "종료시간",
+            isEdit: editTime == "end"),
+      ],
+    );
+  }
+}
+
+class TimerTextContainer extends StatelessWidget {
+  const TimerTextContainer(
+      {super.key,
+      required this.text,
+      required this.timeText,
+      this.isEdit = true});
+
+  final String text;
+  final String timeText;
+  final bool isEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(text,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xff392e5c),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  )),
+              Visibility(
+                visible: isEdit,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    child: Icon(
+                      Icons.edit,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Text(
+            timeText,
+            style: const TextStyle(
+              color: Color(0xff9d9d9d),
+              fontSize: 15,
             ),
           )
         ],
