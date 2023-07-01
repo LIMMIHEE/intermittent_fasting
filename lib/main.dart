@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/Screen/start_screen.dart';
 import 'package:intermittent_fasting/Utils/firebase_utils.dart';
+import 'package:intermittent_fasting/screen/home_screen.dart';
+import 'package:intermittent_fasting/utils/prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'utils/globals.dart';
 
@@ -8,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   prefs = await SharedPreferences.getInstance();
+  isLogin = prefs.getString(Prefs().uid) != null;
   runApp(const MyApp());
 }
 
@@ -34,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const StartScreen(),
+      home: isLogin ? const HomeScreen() : const StartScreen(),
     );
   }
 }

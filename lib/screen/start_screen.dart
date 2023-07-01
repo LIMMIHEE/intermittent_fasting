@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/utils/globals.dart';
+import 'package:intermittent_fasting/utils/prefs.dart';
 import 'package:intermittent_fasting/widget/start_widget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
@@ -62,6 +64,10 @@ class StartWidgetState extends State<OverlappingWidget> {
 
   void onTap(String status) {
     if (status == "fastingSet") {
+      Utils().getDeviceUniqueId().then((value) {
+        prefs.setString(Prefs().uid, value);
+      });
+
       Navigator.push(
           context,
           MaterialPageRoute(

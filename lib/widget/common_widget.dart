@@ -1,4 +1,6 @@
+import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/globals.dart';
 import '../utils/prefs.dart';
@@ -136,15 +138,16 @@ class ButtonTabItem extends StatelessWidget {
 }
 
 class FastingRatioLabel extends StatelessWidget {
-  const FastingRatioLabel({super.key, this.editIcon = false});
+  const FastingRatioLabel(
+      {super.key, this.editIcon = false, required this.fastingState});
 
   final bool editIcon;
+  final bool fastingState;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: editIcon ? 90 : 70,
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
@@ -157,7 +160,7 @@ class FastingRatioLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            prefs.getString(Prefs().fastingTimeRatio) ?? '',
+            '${prefs.getString(Prefs().fastingTimeRatio) ?? ''} ${fastingState ? '단식중' : '식사중'}',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xffffb72d),
@@ -190,8 +193,8 @@ class TimerRowContainer extends StatelessWidget {
     required this.editTime,
   });
 
-  final String startTime;
-  final String endTime;
+  final DateTime? startTime;
+  final DateTime? endTime;
   final String editTime;
 
   @override
@@ -200,7 +203,9 @@ class TimerRowContainer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         TimerTextContainer(
-            timeText: "6/10 오후 6 : 26",
+            timeText: startTime == null
+                ? ''
+                : DateFormat("M/d 오후 HH : mm").format(startTime!),
             text: "시작시간",
             isEdit: editTime == "start"),
         Image.asset(
@@ -208,7 +213,9 @@ class TimerRowContainer extends StatelessWidget {
           width: 35,
         ),
         TimerTextContainer(
-            timeText: "6/10 오후 6 : 26",
+            timeText: endTime == null
+                ? ''
+                : DateFormat("M/d 오후 HH : mm").format(endTime!),
             text: "종료시간",
             isEdit: editTime == "end"),
       ],
@@ -229,7 +236,8 @@ class TimerTextContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      width: 140,
       padding: const EdgeInsets.all(12),
       child: Column(
         children: [
@@ -246,7 +254,26 @@ class TimerTextContainer extends StatelessWidget {
               Visibility(
                 visible: isEdit,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    BottomPicker.dateTime(
+                      title: '${text == '시작시간' ? '시작' : '종료'} 시간을 선택해주세요.',
+                      titleStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black,
+                      ),
+                      onSubmit: (date) {
+                        prefs.setString(
+                            Prefs().timerStartTime, date.toString());
+                        print(date);
+                      },
+                      iconColor: Colors.black,
+                      minDateTime:
+                          DateTime.now().subtract(const Duration(days: 5)),
+                      maxDateTime: DateTime.now(),
+                      buttonSingleColor: const Color(0xFFFFB82E),
+                    ).show(context);
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 6),
                     child: Icon(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/utils/globals.dart';
+import 'package:intermittent_fasting/utils/prefs.dart';
 import 'package:intermittent_fasting/widget/common_widget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
@@ -111,6 +113,10 @@ class CompleteScreen extends StatelessWidget {
   }
 
   Widget timeColumn() {
+    final startTime = DateTime.parse(
+        prefs.getString(Prefs().timerStartTime) ?? DateTime.now().toString());
+    final targetTime =
+        Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
     final hours = (Duration(seconds: progressTime).inMinutes / 60).truncate();
     final minutes = Duration(seconds: progressTime).inMinutes % 60;
 
@@ -129,9 +135,9 @@ class CompleteScreen extends StatelessWidget {
               ),
             ),
           ),
-          const TimerRowContainer(
-            startTime: '',
-            endTime: '',
+          TimerRowContainer(
+            startTime: startTime,
+            endTime: startTime.add(Duration(seconds: targetTime)),
             editTime: 'end',
           )
         ],

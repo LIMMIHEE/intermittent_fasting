@@ -19,10 +19,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool fastingState = true;
   Timer? timer;
+
   int elapsedTime = 0;
   int targetTime = const Duration(hours: 16).inSeconds;
 
+  DateTime? startTime;
+
   void startTimer() {
+    prefs.setString(Prefs().timerStartTime, DateTime.now().toString());
+    startTime ??= DateTime.now();
+
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => elapsedTime++);
     });
@@ -50,6 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     targetTime =
         Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
+
+    var timerStartTime = prefs.getString(Prefs().timerStartTime) ?? '';
+    if (timerStartTime.isNotEmpty) {
+      startTime = DateTime.parse(timerStartTime);
+      elapsedTime = DateTime.now().difference(startTime!).inSeconds;
+    }
+
     super.initState();
   }
 
@@ -92,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     }
                   },
-                  child: const FastingRatioLabel(editIcon: true),
+                  child: FastingRatioLabel(
+                      editIcon: true, fastingState: fastingState),
                 ),
               ),
               TimerCircleProgress(
@@ -112,8 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: TimerRowContainer(
-                  startTime: '',
-                  endTime: '',
+                  startTime: startTime,
+                  endTime: startTime?.add(Duration(seconds: targetTime)),
                   editTime: fastingState ? 'end' : 'start',
                 ),
               ),
