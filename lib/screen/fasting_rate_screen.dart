@@ -111,14 +111,21 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                     prefs.setInt(Prefs().fastingTime,
                         int.parse(selectFasting!.substring(0, 2)));
 
+                    final isFastingTime =
+                        prefs.getBool(Prefs().isFastingTime) ?? true;
+
+                    final hours = _tabController.index == 0
+                        ? selectFasting
+                            .split(":")
+                            .elementAt(isFastingTime ? 0 : 1)
+                        : selectFasting!.substring(0, 2);
                     widget.comeStartScreen
                         ? Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const HomeScreen()),
                             (route) => false)
-                        : Navigator.pop(
-                            context, int.parse(selectFasting!.substring(0, 2)));
+                        : Navigator.pop(context, int.parse(hours));
                   }
                 },
                 child: Container(

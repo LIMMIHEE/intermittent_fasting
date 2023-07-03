@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/model/history.dart';
+import 'package:intermittent_fasting/service/sqlite_helper.dart';
 import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
 import 'package:intermittent_fasting/widget/common_widget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
 class CompleteScreen extends StatelessWidget {
-  const CompleteScreen(
+  CompleteScreen(
       {Key? key, required this.progressTime, required this.isFastingTimeDone})
       : super(key: key);
 
   final int progressTime;
   final bool isFastingTimeDone;
+
+  final TextEditingController controller = TextEditingController();
+
+  final startTime = DateTime.parse(
+      prefs.getString(Prefs().timerStartTime) ?? DateTime.now().toString());
+  final targetTime =
+      Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +56,10 @@ class CompleteScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: Visibility(
                     visible: !isFastingTimeDone,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
+                        const Text(
                           '식단 메모',
                           style: TextStyle(
                             color: Color(0xFF392E5C),
@@ -60,7 +69,8 @@ class CompleteScreen extends StatelessWidget {
                         ),
                         TextField(
                           maxLines: 9,
-                          decoration: InputDecoration(
+                          controller: controller,
+                          decoration: const InputDecoration(
                               border: InputBorder.none,
                               hintText: "오늘의 식단 일기 등을 적어주세요!",
                               labelStyle: TextStyle(
@@ -73,7 +83,27 @@ class CompleteScreen extends StatelessWidget {
                   ),
                 )),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    if (isFastingTimeDone) {
+                      await SQLiteHelper.insertHistory(History(
+                          startDate: startTime.toString(),
+                          endDate: startTime
+                              .add(Duration(seconds: targetTime))
+                              .toString(),
+                          fastingRatio:
+                              prefs.getString(Prefs().fastingTimeRatio) ?? '',
+                          memo: ''));
+                    } else if (!isFastingTimeDone &&
+                        controller.text.isNotEmpty) {
+                      final id = prefs.getInt(Prefs().nowEatHistoryId) ?? 0;
+
+                      await SQLiteHelper.getHistory(id).then((history) {
+                        history.memo = controller.text;
+                        SQLiteHelper.updateHistory(history);
+                      });
+                    }
+
+                    prefs.setBool(Prefs().isFastingTime, !isFastingTimeDone);
                     Navigator.pop(context);
                   },
                   child: Container(
@@ -113,10 +143,6 @@ class CompleteScreen extends StatelessWidget {
   }
 
   Widget timeColumn() {
-    final startTime = DateTime.parse(
-        prefs.getString(Prefs().timerStartTime) ?? DateTime.now().toString());
-    final targetTime =
-        Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
     final hours = (Duration(seconds: progressTime).inMinutes / 60).truncate();
     final minutes = Duration(seconds: progressTime).inMinutes % 60;
 
@@ -137,7 +163,9 @@ class CompleteScreen extends StatelessWidget {
           ),
           TimerRowContainer(
             startTime: startTime,
-            endTime: startTime.add(Duration(seconds: targetTime)),
+            endTime: isFastingTimeDone
+                ? startTime.add(Duration(seconds: targetTime))
+                : DateTime.now(),
             editTime: 'end',
           )
         ],

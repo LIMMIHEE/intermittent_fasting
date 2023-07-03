@@ -46,21 +46,36 @@ class _HomeScreenState extends State<HomeScreen> {
                     isFastingTimeDone: fastingState))).whenComplete(() {
           elapsedTime = 0;
           fastingState = !fastingState;
+          setTargetTime(fastingState);
           startTimer();
         });
       });
     }
   }
 
+  void setTargetTime(bool isFastingTime) {
+    final fastingRatio = prefs.getString(Prefs().fastingTimeRatio) ?? '16:8';
+    final hourString = fastingRatio.contains(":")
+        ? fastingRatio.split(":").elementAt(isFastingTime ? 0 : 1)
+        : fastingRatio;
+
+    targetTime = Duration(hours: int.parse(hourString)).inSeconds;
+  }
+
   @override
   void initState() {
-    targetTime =
-        Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
+    final isFastingTime = prefs.getBool(Prefs().isFastingTime) ?? true;
+    setTargetTime(isFastingTime);
 
     var timerStartTime = prefs.getString(Prefs().timerStartTime) ?? '';
     if (timerStartTime.isNotEmpty) {
       startTime = DateTime.parse(timerStartTime);
       elapsedTime = DateTime.now().difference(startTime!).inSeconds;
+      fastingState = isFastingTime;
+
+      startTimer();
+    } else {
+      prefs.setBool(Prefs().isFastingTime, true);
     }
 
     super.initState();
