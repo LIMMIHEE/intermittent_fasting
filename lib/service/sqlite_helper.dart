@@ -44,7 +44,7 @@ class SQLiteHelper {
   static Future<List<History>> loadHistory() async {
     Database db = await getDatabase;
 
-    List<Map> maps = await db.query('history');
+    final List<Map> maps = await db.query('history');
     return List.generate(
         maps.length,
         (index) => History(
@@ -55,18 +55,19 @@ class SQLiteHelper {
             memo: maps[index]['memo']));
   }
 
-  static Future getHistory(int id) async {
+  static Future<History> getHistory(int id) async {
     Database db = await getDatabase;
 
-    List<Map> maps =
+    final List<Map> maps =
         await db.query('history', where: 'id = ?', whereArgs: [id]);
-
-    return History(
-        id: maps[0]['id'],
-        startDate: maps[0]['startDate'],
-        endDate: maps[0]['endDate'],
-        fastingRatio: maps[0]['fastingRatio'],
-        memo: maps[0]['memo']);
+    return List.generate(
+        1,
+        (index) => History(
+            id: maps[index]['id'],
+            startDate: maps[index]['startDate'],
+            endDate: maps[index]['endDate'],
+            fastingRatio: maps[index]['fastingRatio'],
+            memo: maps[index]['memo'])).first;
   }
 
   static Future updateHistory(History newHistory) async {

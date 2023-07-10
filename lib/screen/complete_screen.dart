@@ -4,6 +4,8 @@ import 'package:intermittent_fasting/service/sqlite_helper.dart';
 import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
 import 'package:intermittent_fasting/widget/common_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:intermittent_fasting/providers/fasting_history.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
 class CompleteScreen extends StatelessWidget {
@@ -85,22 +87,15 @@ class CompleteScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (isFastingTimeDone) {
-                      await SQLiteHelper.insertHistory(History(
-                          startDate: startTime.toString(),
-                          endDate: startTime
-                              .add(Duration(seconds: targetTime))
-                              .toString(),
-                          fastingRatio:
-                              prefs.getString(Prefs().fastingTimeRatio) ?? '',
-                          memo: ''));
+                      context
+                          .read<FastingHistory>()
+                          .addHistory(startTime, targetTime);
                     } else if (!isFastingTimeDone &&
                         controller.text.isNotEmpty) {
                       final id = prefs.getInt(Prefs().nowEatHistoryId) ?? 0;
-
-                      await SQLiteHelper.getHistory(id).then((history) {
-                        history.memo = controller.text;
-                        SQLiteHelper.updateHistory(history);
-                      });
+                      context
+                          .read<FastingHistory>()
+                          .updateHistoryMemo(id, controller.text);
                     }
 
                     prefs.setBool(Prefs().isFastingTime, !isFastingTimeDone);
