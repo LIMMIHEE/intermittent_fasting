@@ -1,23 +1,18 @@
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intl/intl.dart';
-
-import '../utils/globals.dart';
-import '../utils/prefs.dart';
+import 'package:provider/provider.dart';
 
 class ButtonTab extends StatelessWidget {
-  const ButtonTab(
-      {super.key,
-      required this.timerAction,
-      required this.widgetChild,
-      required this.timerActive});
+  const ButtonTab({super.key, required this.widgetChild});
 
-  final bool timerActive;
-  final Function() timerAction;
   final List<Widget> widgetChild;
 
   @override
   Widget build(BuildContext context) {
+    final timer = context.select((FastingData data) => data.timer);
+
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -69,7 +64,15 @@ class ButtonTab extends StatelessWidget {
         Positioned(
           bottom: 186,
           child: GestureDetector(
-            onTap: () => timerAction(),
+            onTap: () {
+              final timer = context.read<FastingData>().timer;
+
+              if (timer == null || !timer!.isActive) {
+                context.read<FastingData>().startTimer();
+              } else {
+                context.read<FastingData>().endTimer(context);
+              }
+            },
             child: Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -93,7 +96,7 @@ class ButtonTab extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      timerActive ? "종료" : "시작",
+                      (timer?.isActive ?? false) ? "종료" : "시작",
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -102,7 +105,9 @@ class ButtonTab extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 3),
                       child: Icon(
-                        timerActive ? Icons.pause : Icons.play_arrow_rounded,
+                        (timer?.isActive ?? false)
+                            ? Icons.pause
+                            : Icons.play_arrow_rounded,
                         color: Colors.white,
                       ),
                     )
@@ -138,14 +143,14 @@ class ButtonTabItem extends StatelessWidget {
 }
 
 class FastingRatioLabel extends StatelessWidget {
-  const FastingRatioLabel(
-      {super.key, this.editIcon = false, required this.fastingState});
+  const FastingRatioLabel({super.key, this.editIcon = false});
 
   final bool editIcon;
-  final bool fastingState;
 
   @override
   Widget build(BuildContext context) {
+    final fastingTime = context.select((FastingData data) => data.fastingTime);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       decoration: BoxDecoration(
@@ -160,7 +165,7 @@ class FastingRatioLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${prefs.getString(Prefs().fastingTimeRatio) ?? ''} ${fastingState ? '단식중' : '식사중'}',
+            '${fastingTime.fastingRatio} ${fastingTime.isFasting ? '단식중' : '식사중'}',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xffffb72d),
@@ -188,36 +193,32 @@ class FastingRatioLabel extends StatelessWidget {
 class TimerRowContainer extends StatelessWidget {
   const TimerRowContainer({
     super.key,
-    required this.startTime,
-    required this.endTime,
-    required this.editTime,
   });
-
-  final DateTime? startTime;
-  final DateTime? endTime;
-  final String editTime;
 
   @override
   Widget build(BuildContext context) {
+    final timer = context.select((FastingData data) => data.timer);
+    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final timerActive = (timer?.isActive ?? false);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         TimerTextContainer(
-            timeText: startTime == null
-                ? ''
-                : DateFormat("M/d 오후 HH : mm").format(startTime!),
             text: "시작시간",
-            isEdit: editTime == "start"),
-        Image.asset(
-          'assets/images/icon_time_arrow.png',
-          width: 35,
+            isTimerStart: timerActive,
+            isEdit: timerActive && fastingTime.isFasting),
+        Visibility(
+          visible: timerActive,
+          child: Image.asset(
+            'assets/images/icon_time_arrow.png',
+            width: 35,
+          ),
         ),
         TimerTextContainer(
-            timeText: endTime == null
-                ? ''
-                : DateFormat("M/d 오후 HH : mm").format(endTime!),
             text: "종료시간",
-            isEdit: editTime == "end"),
+            isTimerStart: timerActive,
+            isEdit: !fastingTime.isFasting),
       ],
     );
   }
@@ -227,15 +228,26 @@ class TimerTextContainer extends StatelessWidget {
   const TimerTextContainer(
       {super.key,
       required this.text,
-      required this.timeText,
+      required this.isTimerStart,
       this.isEdit = true});
 
   final String text;
-  final String timeText;
   final bool isEdit;
+  final bool isTimerStart;
 
   @override
   Widget build(BuildContext context) {
+    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    String timeText = '';
+    if (isTimerStart && text == '시작시간') {
+      timeText = DateFormat("M/d 오후 HH : mm")
+          .format(fastingTime.startTime ?? DateTime.now());
+    } else if (fastingTime.startTime != null) {
+      final endTime =
+          fastingTime.startTime!.add(Duration(seconds: fastingTime.targetTime));
+      timeText = DateFormat("M/d 오후 HH : mm").format(endTime);
+    }
+
     return Container(
       width: 140,
       padding: const EdgeInsets.all(12),
@@ -256,15 +268,14 @@ class TimerTextContainer extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     BottomPicker.dateTime(
-                      title: '${text == '시작시간' ? '시작' : '종료'} 시간을 선택해주세요.',
+                      title: '시작 시간을 선택해주세요.',
                       titleStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         color: Colors.black,
                       ),
                       onSubmit: (date) {
-                        prefs.setString(
-                            Prefs().timerStartTime, date.toString());
+                        context.read<FastingData>().updateStartTime(date);
                         print(date);
                       },
                       iconColor: Colors.black,

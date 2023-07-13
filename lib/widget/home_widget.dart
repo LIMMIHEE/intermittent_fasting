@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/model/fasting_time.dart';
+import 'package:intermittent_fasting/providers/fasting_data.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/time_utils.dart';
 
 class TimerCircleProgress extends StatelessWidget {
   const TimerCircleProgress({
     super.key,
-    required this.elapsedTime,
-    required this.targetTime,
   });
-
-  final int elapsedTime;
-  final int targetTime;
 
   @override
   Widget build(BuildContext context) {
+    final fastingTime = context.select((FastingData data) => data.fastingTime);
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -32,7 +32,7 @@ class TimerCircleProgress extends StatelessWidget {
                 ],
               ),
               child: CircularProgressIndicator(
-                  value: elapsedTime / targetTime,
+                  value: fastingTime.elapsedTime / fastingTime.targetTime,
                   color: const Color(0xffFFB82E),
                   backgroundColor: const Color(0xffF2F2F2),
                   strokeWidth: 20)),
@@ -51,7 +51,8 @@ class TimerCircleProgress extends StatelessWidget {
           children: [
             const Text(" "),
             Text(
-              TimeUtils().printDuration(Duration(seconds: elapsedTime)),
+              TimeUtils()
+                  .printDuration(Duration(seconds: fastingTime.elapsedTime)),
               style: const TextStyle(
                 color: Color(0xff392e5c),
                 fontSize: 40,

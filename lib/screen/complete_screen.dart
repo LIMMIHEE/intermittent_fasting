@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/model/fasting_time.dart';
 import 'package:intermittent_fasting/model/history.dart';
+import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intermittent_fasting/service/sqlite_helper.dart';
 import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
@@ -9,22 +11,15 @@ import 'package:intermittent_fasting/providers/fasting_history.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
 class CompleteScreen extends StatelessWidget {
-  CompleteScreen(
-      {Key? key, required this.progressTime, required this.isFastingTimeDone})
-      : super(key: key);
-
-  final int progressTime;
-  final bool isFastingTimeDone;
+  CompleteScreen({Key? key}) : super(key: key);
 
   final TextEditingController controller = TextEditingController();
 
-  final startTime = DateTime.parse(
-      prefs.getString(Prefs().timerStartTime) ?? DateTime.now().toString());
-  final targetTime =
-      Duration(hours: prefs.getInt(Prefs().fastingTime) ?? 0).inSeconds;
-
   @override
   Widget build(BuildContext context) {
+    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final isFastingTimeDone = fastingTime.isFasting;
+
     return Scaffold(
       body: ColoredBox(
         color: const Color(0xFFFFB82E).withOpacity(0.2),
@@ -50,7 +45,7 @@ class CompleteScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: isFastingTimeDone ? 120 : 25),
-                  child: timeColumn(),
+                  child: timeColumn(fastingTime.elapsedTime),
                 ),
                 Expanded(
                     child: Padding(
@@ -87,9 +82,7 @@ class CompleteScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (isFastingTimeDone) {
-                      context
-                          .read<FastingHistory>()
-                          .addHistory(startTime, targetTime);
+                      context.read<FastingHistory>().addHistory(fastingTime);
                     } else if (!isFastingTimeDone &&
                         controller.text.isNotEmpty) {
                       final id = prefs.getInt(Prefs().nowEatHistoryId) ?? 0;
@@ -98,7 +91,10 @@ class CompleteScreen extends StatelessWidget {
                           .updateHistoryMemo(id, controller.text);
                     }
 
-                    prefs.setBool(Prefs().isFastingTime, !isFastingTimeDone);
+                    context
+                        .read<FastingData>()
+                        .updateFastingStatus(!isFastingTimeDone);
+                    context.read<FastingData>().saveFastingTime();
                     Navigator.pop(context);
                   },
                   child: Container(
@@ -137,9 +133,9 @@ class CompleteScreen extends StatelessWidget {
     );
   }
 
-  Widget timeColumn() {
-    final hours = (Duration(seconds: progressTime).inMinutes / 60).truncate();
-    final minutes = Duration(seconds: progressTime).inMinutes % 60;
+  Widget timeColumn(int elapsedTime) {
+    final hours = (Duration(seconds: elapsedTime).inMinutes / 60).truncate();
+    final minutes = Duration(seconds: elapsedTime).inMinutes % 60;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -156,13 +152,7 @@ class CompleteScreen extends StatelessWidget {
               ),
             ),
           ),
-          TimerRowContainer(
-            startTime: startTime,
-            endTime: isFastingTimeDone
-                ? startTime.add(Duration(seconds: targetTime))
-                : DateTime.now(),
-            editTime: 'end',
-          )
+          const TimerRowContainer()
         ],
       ),
     );

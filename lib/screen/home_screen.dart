@@ -1,13 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/providers/fasting_history.dart';
+import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-import 'package:intermittent_fasting/screen/complete_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/prefs.dart';
 import '../widget/common_widget.dart';
 import '../widget/home_widget.dart';
 
@@ -19,67 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool fastingState = true;
-  Timer? timer;
-
-  int elapsedTime = 0;
-  int targetTime = const Duration(hours: 16).inSeconds;
-
-  DateTime? startTime;
-
-  void startTimer() {
-    prefs.setString(Prefs().timerStartTime, DateTime.now().toString());
-    startTime ??= DateTime.now();
-
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setState(() => elapsedTime++);
-    });
-  }
-
-  void endTimer() {
-    if (timer != null && timer!.isActive) {
-      setState(() {
-        timer?.cancel();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CompleteScreen(
-                    progressTime: elapsedTime,
-                    isFastingTimeDone: fastingState))).whenComplete(() {
-          elapsedTime = 0;
-          fastingState = !fastingState;
-          setTargetTime(fastingState);
-          startTimer();
-        });
-      });
-    }
-  }
-
-  void setTargetTime(bool isFastingTime) {
-    final fastingRatio = prefs.getString(Prefs().fastingTimeRatio) ?? '16:8';
-    final hourString = fastingRatio.contains(":")
-        ? fastingRatio.split(":").elementAt(isFastingTime ? 0 : 1)
-        : fastingRatio;
-
-    targetTime = Duration(hours: int.parse(hourString)).inSeconds;
-  }
-
   @override
   void initState() {
-    final isFastingTime = prefs.getBool(Prefs().isFastingTime) ?? true;
-    setTargetTime(isFastingTime);
-
-    var timerStartTime = prefs.getString(Prefs().timerStartTime) ?? '';
-    if (timerStartTime.isNotEmpty) {
-      startTime = DateTime.parse(timerStartTime);
-      elapsedTime = DateTime.now().difference(startTime!).inSeconds;
-      fastingState = isFastingTime;
-
-      startTimer();
-    } else {
-      prefs.setBool(Prefs().isFastingTime, true);
-    }
-
+    context.read<FastingData>().settingData();
     super.initState();
   }
 
@@ -87,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChangeNotifierProvider(
-        create: (BuildContext context) => FastingHistory(),
+        create: (BuildContext context) => FastingData(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -112,45 +49,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 110,
                   child: GestureDetector(
                     onTap: () async {
-                      var result = await Navigator.push(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const FastingRateScreen(
                                   comeStartScreen: false)));
-
-                      if (result != null) {
-                        setState(() {
-                          targetTime = Duration(hours: result).inSeconds;
-                        });
-                      }
                     },
-                    child: FastingRatioLabel(
-                        editIcon: true, fastingState: fastingState),
+                    child: const FastingRatioLabel(editIcon: true),
                   ),
                 ),
-                TimerCircleProgress(
-                    elapsedTime: elapsedTime, targetTime: targetTime),
+                const TimerCircleProgress(),
               ],
             )),
-            ButtonTab(
-              timerAction: () {
-                if (timer == null || !timer!.isActive) {
-                  startTimer();
-                } else {
-                  endTimer();
-                }
-              },
-              timerActive: timer?.isActive ?? false,
+            const ButtonTab(
               widgetChild: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: TimerRowContainer(
-                    startTime: startTime,
-                    endTime: startTime?.add(Duration(seconds: targetTime)),
-                    editTime: fastingState ? 'end' : 'start',
-                  ),
+                  padding: EdgeInsets.only(top: 20),
+                  child: TimerRowContainer(),
                 ),
-                const Divider()
+                Divider()
               ],
             )
           ],

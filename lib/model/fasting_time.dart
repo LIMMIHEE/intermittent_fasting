@@ -14,7 +14,8 @@ class FastingTime {
 
   FastingTime.fromJson(Map<String, dynamic> json) {
     isFasting = json['isFasting'];
-    startTime = json['startTime'];
+    if (json['startTime'] != 'null')
+      startTime = DateTime.parse(json['startTime']);
     fastingRatio = json['fastingRatio'];
     elapsedTime = json['elapsedTime'];
     targetTime = json['targetTime'];
@@ -23,7 +24,7 @@ class FastingTime {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['isFasting'] = isFasting;
-    data['startTime'] = startTime;
+    data['startTime'] = startTime.toString();
     data['fastingRatio'] = fastingRatio;
     data['elapsedTime'] = elapsedTime;
     data['targetTime'] = targetTime;

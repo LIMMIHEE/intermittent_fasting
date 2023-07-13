@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/model/fasting_time.dart';
@@ -19,51 +20,67 @@ class FastingData extends ChangeNotifier {
   }
 
   void settingData() {
-    final isFastingTime = prefs.getBool(Prefs().isFastingTime) ?? true;
-    setTargetTime(isFastingTime);
+    final fastingTimeJson = prefs.getString(Prefs().fastingTime) ??
+        _fastingTime.toJson().toString();
+    _fastingTime = FastingTime.fromJson(jsonDecode(fastingTimeJson));
+    setTargetTime();
 
-    var timerStartTime = prefs.getString(Prefs().timerStartTime) ?? '';
-    if (timerStartTime.isNotEmpty) {
-      _fastingTime.startTime = DateTime.parse(timerStartTime);
+    if (_fastingTime.startTime != null) {
       _fastingTime.elapsedTime =
           DateTime.now().difference(_fastingTime.startTime!).inSeconds;
-      _fastingTime.isFasting = isFastingTime;
     } else {
-      prefs.setBool(Prefs().isFastingTime, true);
+      _fastingTime.isFasting = true;
     }
+    startTimer();
+    notifyListeners();
   }
 
-  void setTargetTime(bool isFastingTime) {
-    final fastingRatio = prefs.getString(Prefs().fastingTimeRatio) ?? '16:8';
+  void saveFastingTime() {
+    prefs.setString(Prefs().fastingTime, jsonEncode(_fastingTime));
+  }
+
+  void setTargetTime() {
+    final fastingRatio = _fastingTime.fastingRatio;
     final hourString = fastingRatio.contains(":")
-        ? fastingRatio.split(":").elementAt(isFastingTime ? 0 : 1)
+        ? fastingRatio.split(":").elementAt(_fastingTime.isFasting ? 0 : 1)
         : fastingRatio;
 
     _fastingTime.targetTime = Duration(hours: int.parse(hourString)).inSeconds;
+    notifyListeners();
+  }
+
+  void updateFastingStatus(bool isFasting) {
+    _fastingTime.isFasting = isFasting;
+    notifyListeners();
+  }
+
+  void updateStartTime(DateTime startTime) {
+    _fastingTime.startTime = startTime;
+    notifyListeners();
   }
 
   void startTimer() {
-    prefs.setString(Prefs().timerStartTime, DateTime.now().toString());
     _fastingTime.startTime ??= DateTime.now();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _fastingTime.elapsedTime++;
     });
+    saveFastingTime();
+    notifyListeners();
   }
 
-  void endTimer() {
+  void endTimer(BuildContext context) {
     if (timer != null && timer!.isActive) {
       timer?.cancel();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  CompleteScreen(fastingTime: fastingTime))).whenComplete(() {
+      Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CompleteScreen()))
+          .whenComplete(() {
         fastingTime.elapsedTime = 0;
         fastingTime.isFasting = !fastingTime.isFasting;
-        setTargetTime(fastingTime.isFasting);
+        setTargetTime();
         startTimer();
       });
     }
+    notifyListeners();
   }
 }
