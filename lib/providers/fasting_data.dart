@@ -8,8 +8,8 @@ import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
 
 class FastingData extends ChangeNotifier {
-  Timer? _timer;
-  FastingTime _fastingTime = FastingTime();
+  static Timer? _timer;
+  static FastingTime _fastingTime = FastingTime();
 
   FastingTime get fastingTime {
     return _fastingTime;
@@ -18,6 +18,11 @@ class FastingData extends ChangeNotifier {
   Timer? get timer {
     return _timer;
   }
+
+  FastingData(){
+    settingData();
+  }
+
 
   void settingData() {
     final fastingTimeJson = prefs.getString(Prefs().fastingTime) ??
@@ -71,16 +76,17 @@ class FastingData extends ChangeNotifier {
 
   void endTimer(BuildContext context) {
     if (timer != null && timer!.isActive) {
-      timer?.cancel();
-      Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CompleteScreen()))
-          .whenComplete(() {
+      final result = Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CompleteScreen()));
+
+      if(result != null){
+        timer?.cancel();
         fastingTime.elapsedTime = 0;
         fastingTime.isFasting = !fastingTime.isFasting;
         setTargetTime();
         startTimer();
-      });
+        notifyListeners();
+      }
     }
-    notifyListeners();
   }
 }

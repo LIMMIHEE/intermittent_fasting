@@ -95,7 +95,7 @@ class CompleteScreen extends StatelessWidget {
                         .read<FastingData>()
                         .updateFastingStatus(!isFastingTimeDone);
                     context.read<FastingData>().saveFastingTime();
-                    Navigator.pop(context);
+                    Navigator.pop(context,{"isDone"});
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
