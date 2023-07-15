@@ -45,7 +45,7 @@ class CompleteScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: isFastingTimeDone ? 120 : 25),
-                  child: timeColumn(fastingTime.elapsedTime),
+                  child: timeColumn(fastingTime.startTime),
                 ),
                 Expanded(
                     child: Padding(
@@ -95,7 +95,7 @@ class CompleteScreen extends StatelessWidget {
                         .read<FastingData>()
                         .updateFastingStatus(!isFastingTimeDone);
                     context.read<FastingData>().saveFastingTime();
-                    Navigator.pop(context,{"isDone"});
+                    Navigator.pop(context, {"isDone"});
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -133,7 +133,8 @@ class CompleteScreen extends StatelessWidget {
     );
   }
 
-  Widget timeColumn(int elapsedTime) {
+  Widget timeColumn(startTime) {
+    final elapsedTime = DateTime.now().difference(startTime!).inSeconds;
     final hours = (Duration(seconds: elapsedTime).inMinutes / 60).truncate();
     final minutes = Duration(seconds: elapsedTime).inMinutes % 60;
 

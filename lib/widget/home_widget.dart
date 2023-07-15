@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/model/fasting_time.dart';
 import 'package:intermittent_fasting/providers/fasting_data.dart';
@@ -5,14 +7,36 @@ import 'package:provider/provider.dart';
 
 import '../utils/time_utils.dart';
 
-class TimerCircleProgress extends StatelessWidget {
+class TimerCircleProgress extends StatefulWidget {
   const TimerCircleProgress({
     super.key,
   });
 
   @override
+  State<TimerCircleProgress> createState() => _TimerCircleProgressState();
+}
+
+class _TimerCircleProgressState extends State<TimerCircleProgress> {
+  late FastingTime fastingTime;
+  Timer? timer;
+
+  bool fastingTimeSetting = false;
+
+  int elapsedTime = 0;
+  int targetTime = 1;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    fastingTime = context.select((FastingData data) => data.fastingTime);
+    if (!fastingTimeSetting) {
+      fastingTimeSetting = true;
+      setFastingTime();
+    }
 
     return Stack(
       alignment: Alignment.center,
@@ -32,7 +56,7 @@ class TimerCircleProgress extends StatelessWidget {
                 ],
               ),
               child: CircularProgressIndicator(
-                  value: fastingTime.elapsedTime / fastingTime.targetTime,
+                  value: elapsedTime / targetTime,
                   color: const Color(0xffFFB82E),
                   backgroundColor: const Color(0xffF2F2F2),
                   strokeWidth: 20)),
@@ -51,8 +75,7 @@ class TimerCircleProgress extends StatelessWidget {
           children: [
             const Text(" "),
             Text(
-              TimeUtils()
-                  .printDuration(Duration(seconds: fastingTime.elapsedTime)),
+              TimeUtils().printDuration(Duration(seconds: elapsedTime)),
               style: const TextStyle(
                 color: Color(0xff392e5c),
                 fontSize: 40,
@@ -68,6 +91,18 @@ class TimerCircleProgress extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void setFastingTime() {
+    if (fastingTime.startTime != null) {
+      targetTime = fastingTime.targetTime;
+      elapsedTime = DateTime.now().difference(fastingTime.startTime!).inSeconds;
+      timer = Timer.periodic(const Duration(seconds: 1), (_) {
+        setState(() {
+          elapsedTime++;
+        });
+      });
+    }
   }
 }
 

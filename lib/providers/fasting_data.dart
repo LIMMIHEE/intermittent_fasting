@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -8,21 +7,20 @@ import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
 
 class FastingData extends ChangeNotifier {
-  static Timer? _timer;
   static FastingTime _fastingTime = FastingTime();
+  static bool _isTimerActive = false;
 
   FastingTime get fastingTime {
     return _fastingTime;
   }
 
-  Timer? get timer {
-    return _timer;
+  bool get isTimerActive {
+    return _isTimerActive;
   }
 
-  FastingData(){
+  FastingData() {
     settingData();
   }
-
 
   void settingData() {
     final fastingTimeJson = prefs.getString(Prefs().fastingTime) ??
@@ -30,13 +28,12 @@ class FastingData extends ChangeNotifier {
     _fastingTime = FastingTime.fromJson(jsonDecode(fastingTimeJson));
     setTargetTime();
 
-    if (_fastingTime.startTime != null) {
-      _fastingTime.elapsedTime =
-          DateTime.now().difference(_fastingTime.startTime!).inSeconds;
-    } else {
+    if (_fastingTime.startTime == null) {
       _fastingTime.isFasting = true;
+    } else {
+      _isTimerActive = true;
     }
-    startTimer();
+    startTimeSet();
     notifyListeners();
   }
 
@@ -61,32 +58,27 @@ class FastingData extends ChangeNotifier {
 
   void updateStartTime(DateTime startTime) {
     _fastingTime.startTime = startTime;
+    saveFastingTime();
+
     notifyListeners();
   }
 
-  void startTimer() {
+  void startTimeSet() {
     _fastingTime.startTime ??= DateTime.now();
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _fastingTime.elapsedTime++;
-    });
     saveFastingTime();
     notifyListeners();
   }
 
-  void endTimer(BuildContext context) {
-    if (timer != null && timer!.isActive) {
-      final result = Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CompleteScreen()));
+  void endTimeSet(BuildContext context) {
+    final result = Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CompleteScreen()));
 
-      if(result != null){
-        timer?.cancel();
-        fastingTime.elapsedTime = 0;
-        fastingTime.isFasting = !fastingTime.isFasting;
-        setTargetTime();
-        startTimer();
-        notifyListeners();
-      }
+    if (result != null) {
+      fastingTime.isFasting = !fastingTime.isFasting;
+      setTargetTime();
+      startTimeSet();
+      notifyListeners();
     }
   }
 }
