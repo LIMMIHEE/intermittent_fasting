@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/model/fasting_time.dart';
-import 'package:intermittent_fasting/model/history.dart';
 import 'package:intermittent_fasting/providers/fasting_data.dart';
-import 'package:intermittent_fasting/service/sqlite_helper.dart';
 import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
 import 'package:intermittent_fasting/widget/common_widget.dart';
@@ -17,7 +14,7 @@ class CompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final fastingTime = context.read<FastingData>().fastingTime;
     final isFastingTimeDone = fastingTime.isFasting;
 
     return Scaffold(

@@ -48,37 +48,43 @@ class FastingData extends ChangeNotifier {
         : fastingRatio;
 
     _fastingTime.targetTime = Duration(hours: int.parse(hourString)).inSeconds;
-    notifyListeners();
+    _saveNotify();
   }
 
   void updateFastingStatus(bool isFasting) {
     _fastingTime.isFasting = isFasting;
-    notifyListeners();
+    _saveNotify();
+  }
+
+  void updateFastingRatio(String fastingRatio) {
+    _fastingTime.fastingRatio = fastingRatio;
+
+    _saveNotify();
   }
 
   void updateStartTime(DateTime startTime) {
     _fastingTime.startTime = startTime;
-    saveFastingTime();
-
-    notifyListeners();
+    _saveNotify();
   }
 
   void startTimeSet() {
     _fastingTime.startTime ??= DateTime.now();
-
-    saveFastingTime();
-    notifyListeners();
+    _saveNotify();
   }
 
-  void endTimeSet(BuildContext context) {
-    final result = Navigator.push(
+  Future<void> endTimeSet(BuildContext context) async {
+    final result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => CompleteScreen()));
 
     if (result != null) {
-      fastingTime.isFasting = !fastingTime.isFasting;
+      _fastingTime.isFasting = !_fastingTime.isFasting;
       setTargetTime();
       startTimeSet();
-      notifyListeners();
     }
+  }
+
+  void _saveNotify(){
+    saveFastingTime();
+    notifyListeners();
   }
 }

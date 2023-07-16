@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intermittent_fasting/screen/home_screen.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/prefs.dart';
 import '../widget/fasting_widget.dart';
 
 class FastingRateScreen extends StatefulWidget {
@@ -109,16 +107,8 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                         ? dayTimeFasting[selectWidgetKey]?.first as String
                         : dayFasting[selectWidgetKey]?.first as String;
 
-                    final fastingTime = context.read<FastingData>().fastingTime;
-                    fastingTime.fastingRatio = selectFasting;
+                    context.read<FastingData>().updateFastingRatio(selectFasting);
                     context.read<FastingData>().setTargetTime();
-
-                    final hours = _tabController.index == 0
-                        ? selectFasting
-                            .split(":")
-                            .elementAt(fastingTime.isFasting ? 0 : 1)
-                        : selectFasting!.substring(0, 2);
-                    context.read<FastingData>().saveFastingTime();
 
                     widget.comeStartScreen
                         ? Navigator.pushAndRemoveUntil(
@@ -126,7 +116,7 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                             MaterialPageRoute(
                                 builder: (context) => const HomeScreen()),
                             (route) => false)
-                        : Navigator.pop(context, int.parse(hours));
+                        : Navigator.pop(context);
                   }
                 },
                 child: Container(

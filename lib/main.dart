@@ -18,8 +18,8 @@ void main() async {
 
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => FastingHistory()),
       ChangeNotifierProvider(create: (_) => FastingData()),
+      ChangeNotifierProvider(create: (_) => FastingHistory()),
     ],
     child: const MyApp(),
   ));

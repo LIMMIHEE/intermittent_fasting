@@ -192,7 +192,10 @@ class FastingRatioLabel extends StatelessWidget {
 class TimerRowContainer extends StatelessWidget {
   const TimerRowContainer({
     super.key,
+    this.isHomeScreen = false
   });
+
+  final bool isHomeScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +213,10 @@ class TimerRowContainer extends StatelessWidget {
             width: 35,
           ),
         ),
-        TimerTextContainer(text: "종료시간", isTimerStart: isTimerActive),
+        TimerTextContainer(text: "종료시간",
+            endTimeTargetTime:isHomeScreen,
+            isTimerStart: isTimerActive
+        ),
       ],
     );
   }
@@ -221,21 +227,26 @@ class TimerTextContainer extends StatelessWidget {
       {super.key,
       required this.text,
       required this.isTimerStart,
-      this.isEdit = false});
+      this.isEdit = false,
+        this.endTimeTargetTime=false});
 
   final String text;
   final bool isEdit;
   final bool isTimerStart;
+  final bool endTimeTargetTime;
 
   @override
   Widget build(BuildContext context) {
     final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final startTime = fastingTime.startTime;
     String timeText = '';
+
     if (isTimerStart && text == '시작시간') {
-      timeText = DateFormat("M/d 오후 HH : mm")
-          .format(fastingTime.startTime ?? DateTime.now());
+      timeText = DateFormat("M/d HH : mm")
+          .format(startTime ?? DateTime.now());
     } else if (text != '시작시간') {
-      timeText = DateFormat("M/d 오후 HH : mm").format(DateTime.now());
+      timeText = DateFormat("M/d HH : mm").format(
+          endTimeTargetTime ? startTime!.add(Duration(seconds: fastingTime.targetTime)): DateTime.now());
     }
 
     return Container(
@@ -264,7 +275,7 @@ class TimerTextContainer extends StatelessWidget {
                         fontSize: 18,
                         color: Colors.black,
                       ),
-                      initialDateTime: fastingTime.startTime,
+                      initialDateTime: startTime,
                       onSubmit: (date) {
                         context.read<FastingData>().updateStartTime(date);
                         print(date);
