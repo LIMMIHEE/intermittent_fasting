@@ -58,8 +58,6 @@ class FastingData extends ChangeNotifier {
 
   void updateFastingRatio(String fastingRatio) {
     _fastingTime.fastingRatio = fastingRatio;
-
-    _saveNotify();
   }
 
   void updateStartTime(DateTime startTime) {
@@ -83,7 +81,8 @@ class FastingData extends ChangeNotifier {
     }
   }
 
-  void _saveNotify(){
+  void _saveNotify() {
+    _fastingTime = FastingTime.clone(fastingTime);
     saveFastingTime();
     notifyListeners();
   }

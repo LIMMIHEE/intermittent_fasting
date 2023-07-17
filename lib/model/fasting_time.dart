@@ -10,6 +10,13 @@ class FastingTime {
       this.fastingRatio = '16:4',
       this.targetTime = 0});
 
+  FastingTime.clone(FastingTime time)
+      : this(
+            isFasting: time.isFasting,
+            startTime: time.startTime,
+            fastingRatio: time.fastingRatio,
+            targetTime: time.targetTime);
+
   FastingTime.fromJson(Map<String, dynamic> json) {
     isFasting = json['isFasting'];
     if (json['startTime'] != 'null') {
