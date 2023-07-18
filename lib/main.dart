@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/Screen/start_screen.dart';
 import 'package:intermittent_fasting/Utils/firebase_utils.dart';
 import 'package:intermittent_fasting/model/history.dart';
+import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intermittent_fasting/providers/fasting_history.dart';
 import 'package:intermittent_fasting/screen/home_screen.dart';
 import 'package:intermittent_fasting/utils/prefs.dart';
@@ -16,7 +17,10 @@ void main() async {
   isLogin = prefs.getString(Prefs().uid) != null;
 
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => FastingHistory())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => FastingData()),
+      ChangeNotifierProvider(create: (_) => FastingHistory()),
+    ],
     child: const MyApp(),
   ));
 }

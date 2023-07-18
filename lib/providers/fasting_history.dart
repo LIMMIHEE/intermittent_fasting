@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/model/fasting_time.dart';
 import 'package:intermittent_fasting/model/history.dart';
 import 'package:intermittent_fasting/service/sqlite_helper.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-import 'package:intermittent_fasting/utils/prefs.dart';
 
 class FastingHistory extends ChangeNotifier {
   List<History> _list = [];
@@ -11,11 +10,13 @@ class FastingHistory extends ChangeNotifier {
     return [...list];
   }
 
-  void addHistory(DateTime startTime, int targetTime) {
+  void addHistory(FastingTime fastingTime) {
     final newHistory = History(
-        startDate: startTime.toString(),
-        endDate: startTime.add(Duration(seconds: targetTime)).toString(),
-        fastingRatio: prefs.getString(Prefs().fastingTimeRatio) ?? '',
+        startDate: fastingTime.startTime.toString(),
+        endDate: fastingTime.startTime!
+            .add(Duration(seconds: fastingTime.targetTime))
+            .toString(),
+        fastingRatio: fastingTime.fastingRatio,
         memo: '');
 
     _list.add(newHistory);
