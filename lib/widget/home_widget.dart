@@ -3,9 +3,53 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/model/fasting_time.dart';
 import 'package:intermittent_fasting/providers/fasting_data.dart';
+import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/widget/common_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/time_utils.dart';
+
+class HomeTimerView extends StatelessWidget {
+  const HomeTimerView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned.fill(
+          top: 0,
+          child: ClipPath(
+            clipper: CustomPath(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFB82E).withOpacity(0.2),
+              ),
+              width: 300,
+              height: 140,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 110,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const FastingRateScreen(comeStartScreen: false)));
+            },
+            child: const FastingRatioLabel(editIcon: true),
+          ),
+        ),
+        const TimerCircleProgress(),
+      ],
+    );
+  }
+}
 
 class TimerCircleProgress extends StatefulWidget {
   const TimerCircleProgress({
@@ -98,9 +142,11 @@ class _TimerCircleProgressState extends State<TimerCircleProgress> {
       targetTime = fastingTime.targetTime;
       elapsedTime = DateTime.now().difference(fastingTime.startTime!).inSeconds;
       timer = Timer.periodic(const Duration(seconds: 1), (_) {
-        setState(() {
-          elapsedTime++;
-        });
+        if (mounted) {
+          setState(() {
+            elapsedTime++;
+          });
+        }
       });
     }
   }

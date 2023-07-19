@@ -5,8 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ButtonTab extends StatelessWidget {
-  const ButtonTab({super.key, required this.widgetChild});
+  const ButtonTab(
+      {super.key, required this.widgetChild, required this.tabController});
 
+  final TabController tabController;
   final List<Widget> widgetChild;
 
   @override
@@ -18,7 +20,7 @@ class ButtonTab extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 28),
+          margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 28),
           padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 19),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
@@ -37,9 +39,8 @@ class ButtonTab extends StatelessWidget {
               ...widgetChild,
               Padding(
                 padding: EdgeInsets.only(top: widgetChild.isNotEmpty ? 15 : 0),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                child: TabBar(
+                  tabs: const [
                     ButtonTabItem(
                       icon: Icons.timer,
                       title: "단식",
@@ -57,6 +58,10 @@ class ButtonTab extends StatelessWidget {
                       title: "설정",
                     )
                   ],
+                  labelColor: const Color(0xffFFB82E),
+                  unselectedLabelColor: Colors.black,
+                  indicatorColor: Colors.transparent,
+                  controller: tabController,
                 ),
               ),
             ],
@@ -190,10 +195,7 @@ class FastingRatioLabel extends StatelessWidget {
 }
 
 class TimerRowContainer extends StatelessWidget {
-  const TimerRowContainer({
-    super.key,
-    this.isHomeScreen = false
-  });
+  const TimerRowContainer({super.key, this.isHomeScreen = false});
 
   final bool isHomeScreen;
 
@@ -213,10 +215,10 @@ class TimerRowContainer extends StatelessWidget {
             width: 35,
           ),
         ),
-        TimerTextContainer(text: "종료시간",
-            endTimeTargetTime:isHomeScreen,
-            isTimerStart: isTimerActive
-        ),
+        TimerTextContainer(
+            text: "종료시간",
+            endTimeTargetTime: isHomeScreen,
+            isTimerStart: isTimerActive),
       ],
     );
   }
@@ -228,7 +230,7 @@ class TimerTextContainer extends StatelessWidget {
       required this.text,
       required this.isTimerStart,
       this.isEdit = false,
-        this.endTimeTargetTime=false});
+      this.endTimeTargetTime = false});
 
   final String text;
   final bool isEdit;
@@ -242,11 +244,11 @@ class TimerTextContainer extends StatelessWidget {
     String timeText = '';
 
     if (isTimerStart && text == '시작시간') {
-      timeText = DateFormat("M/d HH : mm")
-          .format(startTime ?? DateTime.now());
+      timeText = DateFormat("M/d HH : mm").format(startTime ?? DateTime.now());
     } else if (text != '시작시간') {
-      timeText = DateFormat("M/d HH : mm").format(
-          endTimeTargetTime ? startTime!.add(Duration(seconds: fastingTime.targetTime)): DateTime.now());
+      timeText = DateFormat("M/d HH : mm").format(endTimeTargetTime
+          ? startTime!.add(Duration(seconds: fastingTime.targetTime))
+          : DateTime.now());
     }
 
     return Container(
