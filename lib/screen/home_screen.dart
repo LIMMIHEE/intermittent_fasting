@@ -11,9 +11,18 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late TabController _tabController;
+
   @override
   void initState() {
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+    );
+    _tabController.addListener(() {
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -24,46 +33,26 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Positioned.fill(
-                    top: 0,
-                    child: ClipPath(
-                      clipper: CustomPath(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFB82E).withOpacity(0.2),
-                        ),
-                        width: 300,
-                        height: 140,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 110,
-                    child: GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const FastingRateScreen(
-                                    comeStartScreen: false)));
-                      },
-                      child: const FastingRatioLabel(editIcon: true),
-                    ),
-                  ),
-                  const TimerCircleProgress(),
-                ],
-              )),
-          const ButtonTab(
-            widgetChild: [
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: TimerRowContainer(isHomeScreen:true),
-              ),
-              Divider()
+              child: TabBarView(
+            controller: _tabController,
+            children: [
+              const HomeTimerView(),
+              Container(),
+              Container(),
+              Container(),
             ],
+          )),
+          ButtonTab(
+            tabController: _tabController,
+            widgetChild: _tabController.index == 0
+                ? [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: TimerRowContainer(isHomeScreen: true),
+                    ),
+                    const Divider()
+                  ]
+                : [],
           )
         ],
       ),
