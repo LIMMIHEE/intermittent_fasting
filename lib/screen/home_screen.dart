@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             controller: _tabController,
             children: [
               const HomeTimerView(),
-              Container(),
+              const HistoryListView(),
               Container(),
               Container(),
             ],

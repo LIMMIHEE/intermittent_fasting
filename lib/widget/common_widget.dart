@@ -1,5 +1,6 @@
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/model/fasting_time.dart';
 import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -147,13 +148,16 @@ class ButtonTabItem extends StatelessWidget {
 }
 
 class FastingRatioLabel extends StatelessWidget {
-  const FastingRatioLabel({super.key, this.editIcon = false});
+  const FastingRatioLabel(
+      {super.key, this.isFastingScreen = true, this.editIcon = false});
 
+  final bool isFastingScreen;
   final bool editIcon;
 
   @override
   Widget build(BuildContext context) {
     final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final title = titleText(fastingTime);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
@@ -169,7 +173,7 @@ class FastingRatioLabel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${fastingTime.fastingRatio} ${fastingTime.isFasting ? '단식중' : '식사중'}',
+            title,
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xffffb72d),
@@ -191,6 +195,18 @@ class FastingRatioLabel extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String titleText(FastingTime fastingTime) {
+    late String title;
+    if (isFastingScreen) {
+      title =
+          '${fastingTime.fastingRatio} ${fastingTime.isFasting ? '단식중' : '식사중'}';
+    } else {
+      title = '16:8';
+    }
+
+    return title;
   }
 }
 
