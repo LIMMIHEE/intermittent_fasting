@@ -30,11 +30,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Stack(
         children: [
-          Expanded(
-              child: TabBarView(
+          TabBarView(
             controller: _tabController,
             children: [
               const HomeTimerView(),
@@ -42,18 +40,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Container(),
               Container(),
             ],
-          )),
-          ButtonTab(
-            tabController: _tabController,
-            widgetChild: _tabController.index == 0
-                ? [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: TimerRowContainer(isHomeScreen: true),
-                    ),
-                    const Divider()
-                  ]
-                : [],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ButtonTab(
+              tabController: _tabController,
+              widgetChild: _tabController.index == 0
+                  ? [
+                      const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: TimerRowContainer(isHomeScreen: true),
+                      ),
+                      const Divider()
+                    ]
+                  : [],
+            ),
           )
         ],
       ),

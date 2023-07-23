@@ -4,10 +4,14 @@ import 'package:intermittent_fasting/model/history.dart';
 import 'package:intermittent_fasting/service/sqlite_helper.dart';
 
 class FastingHistory extends ChangeNotifier {
-  List<History> _list = [];
+  static List<History> _list = [];
 
   List<History> get list {
-    return [...list];
+    return _list;
+  }
+
+  FastingHistory() {
+    fetchAndSetHistory();
   }
 
   void addHistory(FastingTime fastingTime) {
@@ -19,10 +23,8 @@ class FastingHistory extends ChangeNotifier {
         fastingRatio: fastingTime.fastingRatio,
         memo: '');
 
-    _list.add(newHistory);
-    notifyListeners();
-
     SQLiteHelper.insertHistory(newHistory);
+    _notify();
   }
 
   void updateHistoryMemo(int id, String memo) {
@@ -32,12 +34,20 @@ class FastingHistory extends ChangeNotifier {
       history.memo = memo;
       SQLiteHelper.updateHistory(history);
     });
-    notifyListeners();
+
+    _notify();
+  }
+
   }
 
   Future<void> fetchAndSetHistory() async {
     _list = await SQLiteHelper.loadHistory();
 
+    notifyListeners();
+  }
+
+  void _notify() {
+    _list = [..._list];
     notifyListeners();
   }
 }

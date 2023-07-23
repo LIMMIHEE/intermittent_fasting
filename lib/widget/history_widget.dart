@@ -1,59 +1,77 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intermittent_fasting/model/history.dart';
+import 'package:intermittent_fasting/providers/fasting_history.dart';
 import 'package:intermittent_fasting/widget/common_widget.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HistoryListView extends StatelessWidget {
   const HistoryListView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final historyList =
+        context.select((FastingHistory history) => history.list);
+
     return Container(
       color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 45, bottom: 20),
-            child: Text(
-              '총 120일간\n진행 하였습니다.',
-              style: TextStyle(
-                color: Color(0xFF392E5C),
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Padding(
+              padding:
+                  EdgeInsets.only(left: 30, right: 30, top: 45, bottom: 20),
+              child: Text(
+                '총 120일간\n진행 하였습니다.',
+                style: TextStyle(
+                  color: Color(0xFF392E5C),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
-          HistoryTopLabel(),
-          ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemCount: 4,
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return HistoryBottomSheet();
+            const HistoryTopLabel(),
+            historyList.isEmpty
+                ? const Expanded(
+                    child: Center(
+                      child: Text("기록이 비어있습니다!"),
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemCount: historyList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final history = historyList[index];
+                      return InkWell(
+                        onTap: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return HistoryBottomSheet(
+                                history: history,
+                              );
+                            },
+                          );
+                        },
+                        child: HistoryListItem(history: history),
+                      );
                     },
-                  );
-                },
-                child: HistoryListItem(),
-              );
-            },
-          )
-        ],
+                  )
+          ],
+        ),
       ),
     );
   }
 }
 
 class HistoryListItem extends StatelessWidget {
-  const HistoryListItem({
-    super.key,
-  });
+  const HistoryListItem({super.key, required this.history});
+
+  final History history;
 
   @override
   Widget build(BuildContext context) {
@@ -63,54 +81,43 @@ class HistoryListItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Row(
             children: [
-              FastingRatioLabel(isFastingScreen: false),
+              FastingRatioLabel(
+                  isFastingScreen: false, ratio: history.fastingRatio),
               Expanded(
                 child: Column(
                   children: [
-                    Text(
-                      "6/10 오후 6 : 26",
-                      style: const TextStyle(
-                        color: Color(0xff9d9d9d),
-                        fontSize: 15,
-                      ),
+                    HistoryTimeText(
+                      timeText: history.startDate,
                     ),
-                    Text(
-                      "6/11  오전 4 : 26",
-                      style: const TextStyle(
-                        color: Color(0xff9d9d9d),
-                        fontSize: 15,
-                      ),
-                    )
+                    HistoryTimeText(
+                      timeText: history.endDate,
+                    ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  '16시간 25분',
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: Colors.black,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: HistoryFastingTimeText(
+                    history: history,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Icon(
+                  )),
+              const Icon(
                 Icons.keyboard_arrow_right_rounded,
                 color: Color(0xff9D9D9D),
               )
             ],
           ),
         ),
-        Divider()
+        const Divider()
       ],
     );
   }
 }
 
 class HistoryBottomSheet extends StatelessWidget {
-  const HistoryBottomSheet({super.key});
+  const HistoryBottomSheet({super.key, required this.history});
+
+  final History history;
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +130,8 @@ class HistoryBottomSheet extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 25),
                   child: Text(
                     '식단 메모',
                     style: TextStyle(
@@ -135,8 +142,8 @@ class HistoryBottomSheet extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '오늘 식단은 클린하지 못한 것 같다... 묘하게 자극적인 음식을 많이 먹은 듯...ㅠㅠ \n\n내일은 더 클린하게 먹도록 노력하기!!',
-                  style: TextStyle(
+                  history.memo,
+                  style: const TextStyle(
                     color: Color(0xFF392E5C),
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -159,16 +166,11 @@ class HistoryBottomSheet extends StatelessWidget {
                   FastingRatioLabel(
                     isFastingScreen: false,
                     editIcon: true,
+                    ratio: history.fastingRatio,
                   ),
                   Expanded(
-                    child: Text(
-                      '총 16시간 25분',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: HistoryFastingTimeText(
+                      history: history,
                     ),
                   ),
                 ],
@@ -177,14 +179,8 @@ class HistoryBottomSheet extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: [
-                    Text(
-                      '6/10 오후 6 : 26',
-                      style: TextStyle(
-                        color: Color(0xFF9D9D9D),
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                      ),
+                    HistoryTimeText(
+                      timeText: history.startDate,
                     ),
                     Expanded(
                       child: Image.asset(
@@ -193,14 +189,8 @@ class HistoryBottomSheet extends StatelessWidget {
                         height: 35,
                       ),
                     ),
-                    Text(
-                      '6/10 오후 6 : 26',
-                      style: TextStyle(
-                        color: Color(0xFF9D9D9D),
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                      ),
+                    HistoryTimeText(
+                      timeText: history.endDate,
                     ),
                   ],
                 ),
@@ -229,6 +219,59 @@ class HistoryBottomSheet extends StatelessWidget {
         )
       ],
     );
+  }
+}
+
+class HistoryFastingTimeText extends StatelessWidget {
+  const HistoryFastingTimeText(
+      {super.key, required this.history, this.fontSize = 18});
+
+  final History history;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      fastingTimeText(history),
+      textAlign: TextAlign.right,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: fontSize,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  String fastingTimeText(History history) {
+    final difference = DateTime.parse(history.endDate)
+        .difference(DateTime.parse(history.startDate))
+        .toString()
+        .split(":");
+    return '${difference.first}시간 ${difference.elementAt(1)}분';
+  }
+}
+
+class HistoryTimeText extends StatelessWidget {
+  const HistoryTimeText(
+      {super.key, required this.timeText, this.fontSize = 16});
+
+  final String timeText;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      dateFormatText(timeText),
+      style: TextStyle(
+        color: const Color(0xFF9D9D9D),
+        fontSize: fontSize,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+
+  String dateFormatText(String date) {
+    return DateFormat("M/d HH : mm").format(DateTime.parse(date));
   }
 }
 
