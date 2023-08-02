@@ -18,6 +18,7 @@ class CompleteScreen extends StatelessWidget {
     final isFastingTimeDone = fastingTime.isFasting;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: ColoredBox(
         color: const Color(0xFFFFB82E).withOpacity(0.2),
         child: Stack(
@@ -79,7 +80,9 @@ class CompleteScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (isFastingTimeDone) {
-                      context.read<FastingHistory>().addHistory(fastingTime);
+                      context
+                          .read<FastingHistory>()
+                          .addHistory(fastingTime, DateTime.now().toString());
                     } else if (!isFastingTimeDone &&
                         controller.text.isNotEmpty) {
                       final id = prefs.getInt(Prefs().nowEatHistoryId) ?? 0;
@@ -88,10 +91,6 @@ class CompleteScreen extends StatelessWidget {
                           .updateHistoryMemo(id, controller.text);
                     }
 
-                    context
-                        .read<FastingData>()
-                        .updateFastingStatus(!isFastingTimeDone);
-                    context.read<FastingData>().saveFastingTime();
                     Navigator.pop(context, {"isDone"});
                   },
                   child: Container(

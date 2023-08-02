@@ -76,8 +76,8 @@ class FastingData extends ChangeNotifier {
 
     if (result != null) {
       _fastingTime.isFasting = !_fastingTime.isFasting;
-      setTargetTime();
-      startTimeSet();
+      _fastingTime.startTime = DateTime.now();
+      _saveNotify();
     }
   }
 

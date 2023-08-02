@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intermittent_fasting/model/history.dart';
+import 'package:intermittent_fasting/providers/fasting_data.dart';
 import 'package:intermittent_fasting/providers/fasting_history.dart';
 import 'package:intermittent_fasting/widget/common_widget.dart';
 import 'package:intl/intl.dart';
@@ -21,12 +22,12 @@ class HistoryListView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 30, right: 30, top: 45, bottom: 20),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 45, bottom: 20),
               child: Text(
-                '총 120일간\n진행 하였습니다.',
-                style: TextStyle(
+                '총 ${historyList.length}일간\n진행 하였습니다.',
+                style: const TextStyle(
                   color: Color(0xFF392E5C),
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -40,26 +41,39 @@ class HistoryListView extends StatelessWidget {
                       child: Text("기록이 비어있습니다!"),
                     ),
                   )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemCount: historyList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final history = historyList[index];
-                      return InkWell(
-                        onTap: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return HistoryBottomSheet(
-                                history: history,
-                              );
-                            },
-                          );
-                        },
-                        child: HistoryListItem(history: history),
-                      );
-                    },
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          itemCount: historyList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final history = historyList[index];
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: historyList.length - 1 == index
+                                      ? 120
+                                      : 0),
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return HistoryBottomSheet(
+                                        history: history,
+                                      );
+                                    },
+                                  );
+                                },
+                                child: HistoryListItem(history: history),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   )
           ],
         ),
@@ -202,7 +216,9 @@ class HistoryBottomSheet extends StatelessWidget {
                 child: Row(
                   children: [
                     HistorySheetButton(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<FastingHistory>().deleteHistory(history);
+                      },
                       isDeleteButton: true,
                     ),
                     const SizedBox(
@@ -318,6 +334,9 @@ class HistoryTopLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fastingState =
+        context.select((FastingData data) => data.fastingTime).isFasting;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       decoration: BoxDecoration(
@@ -339,13 +358,13 @@ class HistoryTopLabel extends StatelessWidget {
             child: Row(
               children: [
                 SvgPicture.asset(
-                  'assets/images/icon_smile.svg',
+                  'assets/images/icon_${fastingState ? 'fire' : 'smile'}.svg',
                 ),
-                const Expanded(
+                Expanded(
                   child: Center(
                     child: Text(
-                      '단식 중',
-                      style: TextStyle(
+                      fastingState ? '단식 중' : '식사 중',
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w600,

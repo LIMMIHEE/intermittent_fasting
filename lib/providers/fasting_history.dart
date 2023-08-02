@@ -14,16 +14,15 @@ class FastingHistory extends ChangeNotifier {
     fetchAndSetHistory();
   }
 
-  void addHistory(FastingTime fastingTime) {
+  void addHistory(FastingTime fastingTime, String endTime) {
     final newHistory = History(
         startDate: fastingTime.startTime.toString(),
-        endDate: fastingTime.startTime!
-            .add(Duration(seconds: fastingTime.targetTime))
-            .toString(),
+        endDate: endTime,
         fastingRatio: fastingTime.fastingRatio,
         memo: '');
 
     SQLiteHelper.insertHistory(newHistory);
+    _list.add(newHistory);
     _notify();
   }
 
@@ -32,12 +31,20 @@ class FastingHistory extends ChangeNotifier {
 
     updateHistory.then((history) {
       history.memo = memo;
+      _list.where((element) => element.id == id).forEach((element) {
+        element.memo = memo;
+      });
       SQLiteHelper.updateHistory(history);
     });
 
     _notify();
   }
 
+  void deleteHistory(History history) {
+    SQLiteHelper.deleteHistory(history).then((value) {
+      _list.remove(history);
+      _notify();
+    });
   }
 
   Future<void> fetchAndSetHistory() async {
