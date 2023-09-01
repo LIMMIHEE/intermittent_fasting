@@ -1,6 +1,6 @@
-import 'package:intermittent_fasting/model/history.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-import 'package:intermittent_fasting/utils/prefs.dart';
+import 'package:intermittent_fasting/core/globals.dart';
+import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/domain/entities/history.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/widget/history_widget.dart';
+import 'package:intermittent_fasting/presentation/widget/history_widget.dart';
 
 import '../widget/common_widget.dart';
 import '../widget/home_widget.dart';

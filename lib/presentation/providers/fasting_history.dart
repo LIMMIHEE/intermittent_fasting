@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/model/fasting_time.dart';
-import 'package:intermittent_fasting/model/history.dart';
-import 'package:intermittent_fasting/service/sqlite_helper.dart';
+import 'package:intermittent_fasting/data/service/sqlite_helper.dart';
+import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
+import 'package:intermittent_fasting/domain/entities/history.dart';
 
 class FastingHistory extends ChangeNotifier {
   static List<History> _list = [];

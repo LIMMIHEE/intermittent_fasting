@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/providers/fasting_data.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-import 'package:intermittent_fasting/utils/prefs.dart';
-import 'package:intermittent_fasting/widget/common_widget.dart';
+import 'package:intermittent_fasting/core/globals.dart';
+import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_history.dart';
+import 'package:intermittent_fasting/presentation/widget/common_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:intermittent_fasting/providers/fasting_history.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
 class CompleteScreen extends StatelessWidget {

@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-
-import '../utils/prefs.dart';
-import '../utils/utils.dart';
+import 'package:intermittent_fasting/core/globals.dart';
+import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/core/utils/utils.dart';
 
 class FirebaseAuthService {
   final utils = Utils();

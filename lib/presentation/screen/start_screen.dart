@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-import 'package:intermittent_fasting/utils/prefs.dart';
-import 'package:intermittent_fasting/widget/start_widget.dart';
+import 'package:intermittent_fasting/core/globals.dart';
+import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/core/utils/utils.dart';
+import 'package:intermittent_fasting/data/service/firebase_auth_service.dart';
+import 'package:intermittent_fasting/presentation/screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/presentation/widget/start_widget.dart';
 import 'package:jelly_anim/jelly_anim.dart';
-
-import '../service/firebase_auth_service.dart';
-import '../utils/utils.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
