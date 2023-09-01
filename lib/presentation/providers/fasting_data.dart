@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/core/globals.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/presentation/screen/complete_screen.dart';
@@ -38,7 +37,8 @@ class FastingData extends ChangeNotifier {
   }
 
   void saveFastingTime() {
-    prefs.setString(Prefs().fastingTime, jsonEncode(_fastingTime));
+    PrefsUtils.setString(
+        PrefsUtils.prefs.fastingTime, jsonEncode(_fastingTime));
   }
 
   void setTargetTime() {

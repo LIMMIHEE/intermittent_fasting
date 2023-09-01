@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/core/globals.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_history.dart';
@@ -85,7 +84,8 @@ class CompleteScreen extends StatelessWidget {
                           .addHistory(fastingTime, DateTime.now().toString());
                     } else if (!isFastingTimeDone &&
                         controller.text.isNotEmpty) {
-                      final id = prefs.getInt(Prefs().nowEatHistoryId) ?? 0;
+                      final id =
+                          PrefsUtils.getInt(PrefsUtils.prefs.nowEatHistoryId);
                       context
                           .read<FastingHistory>()
                           .updateHistoryMemo(id, controller.text);

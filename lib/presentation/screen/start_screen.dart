@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/core/globals.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/data/service/firebase_auth_service.dart';
@@ -64,7 +63,7 @@ class StartWidgetState extends State<OverlappingWidget> {
   void onTap(String status) {
     if (status == "fastingSet") {
       Utils().getDeviceUniqueId().then((value) {
-        prefs.setString(Prefs().uid, value);
+        PrefsUtils.setString(PrefsUtils.prefs.uid, value);
       });
 
       Navigator.push(

@@ -1,4 +1,3 @@
-import 'package:intermittent_fasting/core/globals.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
 import 'package:sqflite/sqflite.dart';
@@ -37,7 +36,7 @@ class SQLiteHelper {
         .insert('history', history.toJson(),
             conflictAlgorithm: ConflictAlgorithm.replace)
         .then((value) {
-      prefs.setInt(Prefs().nowEatHistoryId, value);
+      PrefsUtils.setInt(PrefsUtils.prefs.nowEatHistoryId, value);
     });
   }
 
