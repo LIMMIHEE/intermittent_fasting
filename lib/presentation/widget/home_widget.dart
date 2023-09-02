@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intermittent_fasting/model/fasting_time.dart';
-import 'package:intermittent_fasting/providers/fasting_data.dart';
-import 'package:intermittent_fasting/screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/widget/common_widget.dart';
+import 'package:intermittent_fasting/core/utils/time_utils.dart';
+import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/screen/fasting_rate_screen.dart';
+import 'package:intermittent_fasting/presentation/widget/common_widget.dart';
 import 'package:provider/provider.dart';
-
-import '../utils/time_utils.dart';
 
 class CustomPath extends CustomClipper<Path> {
   @override

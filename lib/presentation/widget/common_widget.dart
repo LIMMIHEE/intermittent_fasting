@@ -1,7 +1,7 @@
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/model/fasting_time.dart';
-import 'package:intermittent_fasting/providers/fasting_data.dart';
+import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

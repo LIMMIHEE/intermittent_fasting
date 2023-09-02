@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/providers/fasting_data.dart';
-import 'package:intermittent_fasting/screen/home_screen.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/screen/home_screen.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 import 'package:provider/provider.dart';
 
@@ -107,7 +107,9 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                         ? dayTimeFasting[selectWidgetKey]?.first as String
                         : dayFasting[selectWidgetKey]?.first as String;
 
-                    context.read<FastingData>().updateFastingRatio(selectFasting);
+                    context
+                        .read<FastingData>()
+                        .updateFastingRatio(selectFasting);
                     context.read<FastingData>().setTargetTime();
 
                     widget.comeStartScreen

@@ -1,6 +1,5 @@
-import 'package:intermittent_fasting/model/history.dart';
-import 'package:intermittent_fasting/utils/globals.dart';
-import 'package:intermittent_fasting/utils/prefs.dart';
+import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/domain/entities/history.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
@@ -37,7 +36,7 @@ class SQLiteHelper {
         .insert('history', history.toJson(),
             conflictAlgorithm: ConflictAlgorithm.replace)
         .then((value) {
-      prefs.setInt(Prefs().nowEatHistoryId, value);
+      PrefsUtils.setInt(PrefsUtils.prefs.nowEatHistoryId, value);
     });
   }
 

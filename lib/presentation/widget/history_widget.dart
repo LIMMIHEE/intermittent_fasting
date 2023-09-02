@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intermittent_fasting/model/history.dart';
-import 'package:intermittent_fasting/providers/fasting_data.dart';
-import 'package:intermittent_fasting/providers/fasting_history.dart';
-import 'package:intermittent_fasting/widget/common_widget.dart';
+import 'package:intermittent_fasting/domain/entities/history.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_history.dart';
+import 'package:intermittent_fasting/presentation/widget/common_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
