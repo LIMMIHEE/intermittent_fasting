@@ -13,18 +13,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  firebase_core: ^2.13.1
-  firebase_analytics: ^10.4.3
-  firebase_auth: 4.6.1
-  flutter_svg: 2.0.5
-  intl: ^0.18.1
-  jelly_anim: ^0.0.7
-  shared_preferences: 2.1.0
-  bottom_picker: ^2.0.4
-  device_info_plus: ^9.0.2
-  sqflite: ^2.2.8
-  provider: ^6.0.5
+  cupertino_icons:
+  firebase_core:
+  firebase_analytics:
+  firebase_auth:
+  flutter_svg:
+  intl:
+  jelly_anim:
+  shared_preferences:
+  bottom_picker:
+  device_info_plus:
+  sqflite:
+  provider:
+  isar:
+  isar_flutter_libs:  # contains Isar Core
 
 dev_dependencies:
   flutter_test:

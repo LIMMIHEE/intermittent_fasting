@@ -4,7 +4,6 @@ import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 
 class FirebaseAuthService {
-  final utils = Utils();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<void> signUpEmail(
@@ -20,17 +19,17 @@ class FirebaseAuthService {
       });
     } on FirebaseAuthException catch (error) {
       print(error.message);
-      utils.showSnackBar(context, "${error.message}");
+      Utils.showSnackBar(context, "${error.message}");
     }
   }
 
   Future<void> sendEmailVerification(BuildContext context) async {
     try {
       _firebaseAuth.currentUser?.sendEmailVerification().then((value) {
-        utils.showSnackBar(context, '인증 메일이 전송되었습니다, 확인해주세요.');
+        Utils.showSnackBar(context, '인증 메일이 전송되었습니다, 확인해주세요.');
       });
     } on FirebaseAuthException catch (e) {
-      utils.showSnackBar(context, e.message!);
+      Utils.showSnackBar(context, e.message!);
     }
   }
 }

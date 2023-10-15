@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
 import 'package:intermittent_fasting/presentation/screen/home_screen.dart';
+import 'package:intermittent_fasting/presentation/widget/fasting/fasting_grid_view.dart';
+import 'package:intermittent_fasting/presentation/widget/fasting/fasting_tab.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 import 'package:provider/provider.dart';
-
-import '../widget/fasting_widget.dart';
 
 class FastingRateScreen extends StatefulWidget {
   const FastingRateScreen({Key? key, required this.comeStartScreen})

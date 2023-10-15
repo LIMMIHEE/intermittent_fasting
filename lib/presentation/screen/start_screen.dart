@@ -3,7 +3,8 @@ import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/data/service/firebase_auth_service.dart';
 import 'package:intermittent_fasting/presentation/screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/presentation/widget/start_widget.dart';
+import 'package:intermittent_fasting/presentation/widget/start/sign_up_view.dart';
+import 'package:intermittent_fasting/presentation/widget/start/welcome_view.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
 class StartScreen extends StatelessWidget {
@@ -55,9 +56,47 @@ class StartWidgetState extends State<OverlappingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.status == "signUp") return signUpWidget();
+    if (widget.status == "signUp") {
+      return SignUpView(
+        back: onBack,
+        signOnTap: signOnTap,
+        emailController: emailController,
+        passwordController: passwordController,
+      );
+    }
 
-    return welcomeWidget();
+    return WelcomeView(
+      onTap: onTap,
+    );
+  }
+
+  void onBack() {
+    setState(() {
+      widget.status = "welecome";
+    });
+  }
+
+  void signOnTap() {
+    if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(emailController.text)) {
+      Utils.showSnackBar(context, "정확한 이메일을 입력해주세요!");
+      return;
+    }
+
+    if (passwordController.text.length < 6) {
+      Utils.showSnackBar(context, "비밀번호를 6글자 이상 설정해주세요!");
+      return;
+    }
+
+    FirebaseAuthService()
+        .signUpEmail(
+            email: emailController.text,
+            password: passwordController.text,
+            context: context)
+        .then((value) {
+      onTap("fastingSet");
+    });
   }
 
   void onTap(String status) {
@@ -78,181 +117,5 @@ class StartWidgetState extends State<OverlappingWidget> {
         widget.status = status;
       });
     });
-  }
-
-  Widget welcomeWidget() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 90),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Expanded(
-                child: Padding(
-              padding: EdgeInsets.only(top: 120),
-              child: Column(
-                children: [
-                  Text(
-                    '환영합니다!',
-                    style: TextStyle(
-                      color: Color(0xFF392E5C),
-                      fontSize: 34,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      '단식 시작 전\n몇 가지 설정을 진행해주세요!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF9D9D9D),
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-            Column(
-              children: [
-                StartButton(
-                  childWidget: const Text(
-                    '앱으로만 사용할래요',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  onTap: () => onTap("fastingSet"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: StartButton(
-                    childWidget: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '웹으로도 사용할래요',
-                          style: TextStyle(
-                            color: Color(0xFF392E5C),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          '회원가입이 필요합니다',
-                          style: TextStyle(
-                            color: Color(0xFF9D9D9D),
-                            fontSize: 12,
-                          ),
-                        )
-                      ],
-                    ),
-                    isOutlineWidget: true,
-                    onTap: () => onTap("signUp"),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget signUpWidget() {
-    return Stack(
-      children: [
-        Visibility(
-          child: Positioned(
-              top: 60,
-              left: 24,
-              child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.status = "welecome";
-                    });
-                  },
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    size: 28,
-                    color: Color(0xFF392E5C),
-                  ))),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 90),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(top: 120),
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 40),
-                        child: Text(
-                          '회원가입',
-                          style: TextStyle(
-                            color: Color(0xFF392E5C),
-                            fontSize: 32,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      SignUpTextField(
-                        hintText: '메일주소',
-                        icon: Icons.mail_outline_rounded,
-                        controller: emailController,
-                      ),
-                      SignUpTextField(
-                        hintText: '비밀번호',
-                        icon: Icons.vpn_key_outlined,
-                        controller: passwordController,
-                      ),
-                    ],
-                  ),
-                )),
-                StartButton(
-                  childWidget: const Text(
-                    '가입하기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  onTap: () {
-                    if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(emailController.text)) {
-                      Utils().showSnackBar(context, "정확한 이메일을 입력해주세요!");
-                      return;
-                    }
-
-                    if (passwordController.text.length < 6) {
-                      Utils().showSnackBar(context, "비밀번호를 6글자 이상 설정해주세요!");
-                      return;
-                    }
-
-                    FirebaseAuthService()
-                        .signUpEmail(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            context: context)
-                        .then((value) {
-                      onTap("fastingSet");
-                    });
-                  },
-                )
-              ],
-            ),
-          ),
-        )
-      ],
-    );
   }
 }

@@ -4,79 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/core/utils/time_utils.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
-import 'package:intermittent_fasting/presentation/screen/fasting_rate_screen.dart';
-import 'package:intermittent_fasting/presentation/widget/common_widget.dart';
 import 'package:provider/provider.dart';
 
-class CustomPath extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height * 0.5);
-    path.lineTo(size.width - size.width, size.height * 0.8);
-    path.close();
-    return path;
-  }
+class HomeTimerCircleProgress extends StatefulWidget {
+  const HomeTimerCircleProgress({super.key});
 
   @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
-  }
+  State<HomeTimerCircleProgress> createState() =>
+      _HomeTimerCircleProgressState();
 }
 
-class HomeTimerView extends StatelessWidget {
-  const HomeTimerView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Positioned.fill(
-          top: 0,
-          child: ClipPath(
-            clipper: CustomPath(),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFB82E).withOpacity(0.2),
-              ),
-              width: 300,
-              height: 140,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 110,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const FastingRateScreen(comeStartScreen: false)));
-            },
-            child: const FastingRatioLabel(editIcon: true),
-          ),
-        ),
-        const TimerCircleProgress(),
-      ],
-    );
-  }
-}
-
-class TimerCircleProgress extends StatefulWidget {
-  const TimerCircleProgress({
-    super.key,
-  });
-
-  @override
-  State<TimerCircleProgress> createState() => _TimerCircleProgressState();
-}
-
-class _TimerCircleProgressState extends State<TimerCircleProgress> {
+class _HomeTimerCircleProgressState extends State<HomeTimerCircleProgress> {
   late FastingTime fastingTime;
   Timer? timer;
 
@@ -146,11 +84,6 @@ class _TimerCircleProgressState extends State<TimerCircleProgress> {
         )
       ],
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   void setFastingTime() {
