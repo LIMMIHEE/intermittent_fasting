@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_history.dart';
-import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
+import 'package:intermittent_fasting/presentation/widget/common_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
@@ -50,31 +50,29 @@ class CompleteScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: Visibility(
                     visible: !isFastingTimeDone,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text(
-                            '식단 메모',
-                            style: TextStyle(
-                              color: Color(0xFF392E5C),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          '식단 메모',
+                          style: TextStyle(
+                            color: Color(0xFF392E5C),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
-                          TextField(
-                            maxLines: 9,
-                            controller: controller,
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "오늘의 식단 일기 등을 적어주세요!",
-                                labelStyle: TextStyle(
-                                  color: Color(0xFF392E5C),
-                                  fontSize: 12,
-                                )),
-                          )
-                        ],
-                      ),
+                        ),
+                        TextField(
+                          maxLines: 9,
+                          controller: controller,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "오늘의 식단 일기 등을 적어주세요!",
+                              labelStyle: TextStyle(
+                                color: Color(0xFF392E5C),
+                                fontSize: 12,
+                              )),
+                        )
+                      ],
                     ),
                   ),
                 )),

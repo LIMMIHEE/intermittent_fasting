@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/presentation/widget/common/button_tab.dart';
-import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
-import 'package:intermittent_fasting/presentation/widget/history/history_list_view.dart';
-import 'package:intermittent_fasting/presentation/widget/home/home_timer.dart';
+import 'package:intermittent_fasting/presentation/widget/history_widget.dart';
+
+import '../widget/common_widget.dart';
+import '../widget/home_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

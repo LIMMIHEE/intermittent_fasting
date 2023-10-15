@@ -14,8 +14,6 @@ class FastingHistory extends ChangeNotifier {
     fetchAndSetHistory();
   }
 
-  // Functions
-
   void addHistory(FastingTime fastingTime, String endTime) {
     final newHistory = History(
         startDate: fastingTime.startTime.toString(),
