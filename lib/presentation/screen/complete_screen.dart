@@ -86,8 +86,7 @@ class CompleteScreen extends StatelessWidget {
                           .addHistory(fastingTime, DateTime.now().toString());
                     } else if (!isFastingTimeDone &&
                         controller.text.isNotEmpty) {
-                      final id =
-                          PrefsUtils.getInt(PrefsUtils.nowEatHistoryId);
+                      final id = PrefsUtils.getInt(PrefsUtils.nowEatHistoryId);
                       context
                           .read<FastingHistory>()
                           .updateHistoryMemo(id, controller.text);

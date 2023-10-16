@@ -11,7 +11,7 @@ class HistorySheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => onTap,
+        onTap: () => onTap(),
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 20),
           padding: const EdgeInsets.symmetric(vertical: 12),
