@@ -17,6 +17,7 @@ class HistoryListView extends StatelessWidget {
       color: Colors.white,
       child: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
@@ -38,7 +39,7 @@ class HistoryListView extends StatelessWidget {
                       child: Text("기록이 비어있습니다!"),
                     ),
                   )
-                : Expanded(
+                : Flexible(
                     child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
