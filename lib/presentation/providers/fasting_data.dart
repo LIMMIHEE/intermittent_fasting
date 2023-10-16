@@ -24,10 +24,9 @@ class FastingData extends ChangeNotifier {
   // Functions
 
   void settingData() {
-    String fastingTimeJson = PrefsUtils.getString(PrefsUtils.prefs.fastingTime);
-    if (fastingTimeJson.isNotEmpty) {
-      _fastingTime = FastingTime.fromJson(jsonDecode(fastingTimeJson));
-    }
+    String fastingTimeJson = PrefsUtils.getString(PrefsUtils.fastingTime);
+    if(fastingTimeJson.isEmpty)  fastingTimeJson = _fastingTime.toJson().toString();
+    _fastingTime = FastingTime.fromJson(jsonDecode(fastingTimeJson));
     setTargetTime();
 
     if (_fastingTime.startTime == null) {
@@ -41,7 +40,7 @@ class FastingData extends ChangeNotifier {
 
   void saveFastingTime() {
     PrefsUtils.setString(
-        PrefsUtils.prefs.fastingTime, jsonEncode(_fastingTime));
+        PrefsUtils.fastingTime, jsonEncode(_fastingTime));
   }
 
   void setTargetTime() {

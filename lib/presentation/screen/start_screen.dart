@@ -102,7 +102,7 @@ class StartWidgetState extends State<OverlappingWidget> {
   void onTap(String status) {
     if (status == "fastingSet") {
       Utils().getDeviceUniqueId().then((value) {
-        PrefsUtils.setString(PrefsUtils.prefs.uid, value);
+        PrefsUtils.setString(PrefsUtils.uid, value);
       });
 
       Navigator.push(

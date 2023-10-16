@@ -15,7 +15,7 @@ class FirebaseAuthService {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
         PrefsUtils.setString(
-            PrefsUtils.prefs.uid, _firebaseAuth.currentUser?.uid ?? "");
+            PrefsUtils.uid, _firebaseAuth.currentUser?.uid ?? "");
       });
     } on FirebaseAuthException catch (error) {
       print(error.message);

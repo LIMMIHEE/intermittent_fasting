@@ -36,7 +36,7 @@ class SQLiteHelper {
         .insert('history', history.toJson(),
             conflictAlgorithm: ConflictAlgorithm.replace)
         .then((value) {
-      PrefsUtils.setInt(PrefsUtils.prefs.nowEatHistoryId, value);
+      PrefsUtils.setInt(PrefsUtils.nowEatHistoryId, value);
     });
   }
 

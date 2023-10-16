@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PrefsUtils.getString(PrefsUtils.prefs.uid).isNotEmpty
+      home: PrefsUtils.getString(PrefsUtils.uid).isNotEmpty
           ? const HomeScreen()
           : const StartScreen(),
     );

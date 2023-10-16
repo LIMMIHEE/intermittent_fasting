@@ -2,7 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsUtils {
   static late SharedPreferences _prefs;
-  static final PrefsUtils prefs = PrefsUtils();
 
   static Future<SharedPreferences> init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -37,7 +36,7 @@ class PrefsUtils {
 
   static Future<bool> clear() async => await _prefs.clear();
 
-  final String uid = "uid";
-  final String fastingTime = "fastingtime";
-  final String nowEatHistoryId = "noweathistoryid";
+  static const String uid = "uid";
+  static const String fastingTime = "fastingtime";
+  static const String nowEatHistoryId = "noweathistoryid";
 }
