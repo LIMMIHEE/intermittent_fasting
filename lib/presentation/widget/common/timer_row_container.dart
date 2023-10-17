@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/timer_text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class TimerRowContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isTimerActive = context.read<FastingData>().isTimerActive;
+    final isTimerActive = context.read<FastingProvider>().isTimerActive;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

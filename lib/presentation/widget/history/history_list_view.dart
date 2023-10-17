@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_history.dart';
+import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
+import 'package:intermittent_fasting/presentation/widget/common/accumulated_date_text.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_bottom_sheet.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_list_item.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_top_label.dart';
@@ -10,9 +11,9 @@ class HistoryListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FastingHistory>(
-      builder:
-          (BuildContext context, FastingHistory fastingHistory, Widget? child) {
+    return Consumer<HistoryProvider>(
+      builder: (BuildContext context, HistoryProvider fastingHistory,
+          Widget? child) {
         fastingHistory.list.sort((b, a) => a.id.compareTo(b.id));
         return Container(
           color: Colors.white,
@@ -21,18 +22,7 @@ class HistoryListView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 30, right: 30, top: 45, bottom: 20),
-                  child: Text(
-                    '총 ${fastingHistory.list.length}일간\n진행 하였습니다.',
-                    style: const TextStyle(
-                      color: Color(0xFF392E5C),
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+                const AccumulatedDateText(),
                 const HistoryTopLabel(),
                 fastingHistory.list.isEmpty
                     ? const Expanded(

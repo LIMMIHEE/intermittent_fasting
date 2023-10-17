@@ -3,6 +3,7 @@ import 'package:intermittent_fasting/presentation/widget/common/button_tab.dart'
 import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_list_view.dart';
 import 'package:intermittent_fasting/presentation/widget/home/home_timer.dart';
+import 'package:intermittent_fasting/presentation/widget/setting/setting_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               const HomeTimerView(),
               const HistoryListView(),
               Container(),
-              Container(),
+              const SettingView(),
             ],
           ),
           Align(

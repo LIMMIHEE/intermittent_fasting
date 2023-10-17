@@ -40,6 +40,12 @@ class SQLiteHelper {
     });
   }
 
+  static Future clearHistory() async {
+    Database db = await getDatabase;
+
+    await db.delete('history');
+  }
+
   static Future<List<History>> loadHistory() async {
     Database db = await getDatabase;
 

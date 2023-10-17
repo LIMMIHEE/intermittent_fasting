@@ -3,14 +3,14 @@ import 'package:intermittent_fasting/data/service/sqlite_helper.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
 
-class FastingHistory extends ChangeNotifier {
+class HistoryProvider extends ChangeNotifier {
   static List<History> _list = [];
 
   List<History> get list {
     return _list;
   }
 
-  FastingHistory() {
+  HistoryProvider() {
     fetchAndSetHistory();
   }
 

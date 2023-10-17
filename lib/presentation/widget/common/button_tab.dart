@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/button_tab_item.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +12,8 @@ class ButtonTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fastingTime = context.read<FastingData>().fastingTime;
-    final isTimerActive = context.read<FastingData>().isTimerActive;
+    final fastingTime = context.read<FastingProvider>().fastingTime;
+    final isTimerActive = context.read<FastingProvider>().isTimerActive;
 
     return Container(
       height: tabController.index == 0 ? 260 : 145,
@@ -74,9 +74,9 @@ class ButtonTab extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 if (!isTimerActive) {
-                  context.read<FastingData>().startTimeSet();
+                  context.read<FastingProvider>().startTimeSet();
                 } else {
-                  context.read<FastingData>().endTimeSet(context);
+                  context.read<FastingProvider>().endTimeSet(context);
                 }
               },
               child: Container(

@@ -5,7 +5,7 @@ import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/presentation/screen/complete_screen.dart';
 
-class FastingData extends ChangeNotifier {
+class FastingProvider extends ChangeNotifier {
   static FastingTime _fastingTime = FastingTime();
   static bool _isTimerActive = false;
 
@@ -17,7 +17,7 @@ class FastingData extends ChangeNotifier {
     return _isTimerActive;
   }
 
-  FastingData() {
+  FastingProvider() {
     settingData();
   }
 

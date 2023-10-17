@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/core/utils/time_utils.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomeTimerCircleProgress extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomeTimerCircleProgressState extends State<HomeTimerCircleProgress> {
 
   @override
   Widget build(BuildContext context) {
-    fastingTime = context.select((FastingData data) => data.fastingTime);
+    fastingTime = context.select((FastingProvider data) => data.fastingTime);
     if (!fastingTimeSetting) {
       fastingTimeSetting = true;
       setFastingTime();

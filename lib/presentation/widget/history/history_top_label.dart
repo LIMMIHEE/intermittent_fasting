@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:provider/provider.dart';
 
 class HistoryTopLabel extends StatelessWidget {
@@ -11,7 +11,7 @@ class HistoryTopLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fastingState =
-        context.select((FastingData data) => data.fastingTime).isFasting;
+        context.select((FastingProvider data) => data.fastingTime).isFasting;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),

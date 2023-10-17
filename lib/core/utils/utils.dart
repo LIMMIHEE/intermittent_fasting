@@ -13,6 +13,41 @@ class Utils {
     ));
   }
 
+  static void showDeleteDialog(BuildContext context, Function() onDelete) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            '기록을 삭제하시겠습니까?',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const SingleChildScrollView(
+            child: Text('삭제 후 되돌릴 수 없습니다!'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                '삭제',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                onDelete();
+              },
+            ),
+            TextButton(
+              child: const Text('취소'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<String> getDeviceUniqueId() async {
     final deviceInfoPlugin = DeviceInfoPlugin();
     final deviceInfo = await deviceInfoPlugin.deviceInfo;

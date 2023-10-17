@@ -39,4 +39,5 @@ class PrefsUtils {
   static const String uid = "uid";
   static const String fastingTime = "fastingtime";
   static const String nowEatHistoryId = "noweathistoryid";
+  static const String darkMode = "darkmode";
 }

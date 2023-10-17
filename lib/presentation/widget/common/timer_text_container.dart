@@ -1,6 +1,6 @@
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,8 @@ class TimerTextContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final fastingTime =
+        context.select((FastingProvider data) => data.fastingTime);
     final startTime = fastingTime.startTime;
     String timeText = '';
 
@@ -59,7 +60,7 @@ class TimerTextContainer extends StatelessWidget {
                       ),
                       initialDateTime: startTime,
                       onSubmit: (date) {
-                        context.read<FastingData>().updateStartTime(date);
+                        context.read<FastingProvider>().updateStartTime(date);
                         print(date);
                       },
                       iconColor: Colors.black,

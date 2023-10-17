@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_history.dart';
+import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/fasting_ratio_label.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_fasting_time_text.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_time_text.dart';
@@ -106,42 +107,15 @@ class HistoryBottomSheet extends StatelessWidget {
                   children: [
                     HistorySheetButton(
                       onTap: () {
-                        showDialog<void>(
-                          context: context,
-                          barrierDismissible: false, // user must tap button!
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text(
-                                '기록을 삭제하시겠습니까?',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              content: const SingleChildScrollView(
-                                child: Text('삭제 후 되돌릴 수 없습니다!'),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text(
-                                    '삭제',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                  onPressed: () {
-                                    context
-                                        .read<FastingHistory>()
-                                        .deleteHistory(history);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                TextButton(
-                                  child: const Text('취소'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        Utils.showDeleteDialog(
+                            context,
+                            () => () {
+                                  context
+                                      .read<HistoryProvider>()
+                                      .deleteHistory(history);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                });
                       },
                       isDeleteButton: true,
                     ),
@@ -151,7 +125,7 @@ class HistoryBottomSheet extends StatelessWidget {
                     HistorySheetButton(
                       onTap: () {
                         context
-                            .read<FastingHistory>()
+                            .read<HistoryProvider>()
                             .updateHistoryMemo(history.id, controller.text);
                         Navigator.pop(context);
                       },

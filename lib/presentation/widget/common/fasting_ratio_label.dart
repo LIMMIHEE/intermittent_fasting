@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
-import 'package:intermittent_fasting/presentation/providers/fasting_data.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:provider/provider.dart';
 
 class FastingRatioLabel extends StatelessWidget {
@@ -16,7 +16,8 @@ class FastingRatioLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fastingTime = context.select((FastingData data) => data.fastingTime);
+    final fastingTime =
+        context.select((FastingProvider data) => data.fastingTime);
     final title = titleText(fastingTime);
 
     return Container(
