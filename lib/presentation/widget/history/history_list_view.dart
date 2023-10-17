@@ -14,6 +14,15 @@ class HistoryListView extends StatelessWidget {
     return Consumer<HistoryProvider>(
       builder: (BuildContext context, HistoryProvider fastingHistory,
           Widget? child) {
+        if (fastingHistory.list.isEmpty) {
+          return const Center(
+            child: Text(
+              '아직 기록 사항이 없습니다!',
+              style: TextStyle(color: Colors.grey),
+            ),
+          );
+        }
+
         fastingHistory.list.sort((b, a) => a.id.compareTo(b.id));
         return Container(
           color: Colors.white,

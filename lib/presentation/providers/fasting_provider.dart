@@ -8,6 +8,7 @@ import 'package:intermittent_fasting/presentation/screen/complete_screen.dart';
 class FastingProvider extends ChangeNotifier {
   static FastingTime _fastingTime = FastingTime();
   static bool _isTimerActive = false;
+  static bool _isClearAfter = false;
 
   FastingTime get fastingTime {
     return _fastingTime;
@@ -15,6 +16,10 @@ class FastingProvider extends ChangeNotifier {
 
   bool get isTimerActive {
     return _isTimerActive;
+  }
+
+  bool get isClearAfter {
+    return _isClearAfter;
   }
 
   FastingProvider() {
@@ -25,8 +30,9 @@ class FastingProvider extends ChangeNotifier {
 
   void settingData() {
     String fastingTimeJson = PrefsUtils.getString(PrefsUtils.fastingTime);
-    if (fastingTimeJson.isEmpty)
-      fastingTimeJson = _fastingTime.toJson().toString();
+    if (fastingTimeJson.isEmpty) {
+      fastingTimeJson = jsonEncode(_fastingTime);
+    }
     _fastingTime = FastingTime.fromJson(jsonDecode(fastingTimeJson));
     setTargetTime();
 
@@ -34,9 +40,15 @@ class FastingProvider extends ChangeNotifier {
       _fastingTime.isFasting = true;
     } else {
       _isTimerActive = true;
+      startTimeSet();
     }
-    startTimeSet();
     notifyListeners();
+  }
+
+  static void clearData() {
+    _fastingTime = FastingTime();
+    _isTimerActive = false;
+    _isClearAfter = true;
   }
 
   void saveFastingTime() {
@@ -69,6 +81,7 @@ class FastingProvider extends ChangeNotifier {
 
   void startTimeSet() {
     _fastingTime.startTime ??= DateTime.now();
+    _isTimerActive = true;
     _saveNotify();
   }
 
@@ -84,7 +97,11 @@ class FastingProvider extends ChangeNotifier {
   }
 
   void _saveNotify() {
-    _fastingTime = FastingTime.clone(fastingTime);
+    _fastingTime = FastingTime().copyWith(
+        isFasting: _fastingTime.isFasting,
+        startTime: _fastingTime.startTime ?? DateTime.now(),
+        fastingRatio: _fastingTime.fastingRatio,
+        targetTime: _fastingTime.targetTime);
     saveFastingTime();
     notifyListeners();
   }

@@ -10,7 +10,8 @@ class TimerRowContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isTimerActive = context.read<FastingProvider>().isTimerActive;
+    final isTimerActive =
+        context.select((FastingProvider provider) => provider.isTimerActive);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

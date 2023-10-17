@@ -27,9 +27,11 @@ class TimerTextContainer extends StatelessWidget {
     if (isTimerStart && text == '시작시간') {
       timeText = DateFormat("M/d HH : mm").format(startTime ?? DateTime.now());
     } else if (text != '시작시간') {
-      timeText = DateFormat("M/d HH : mm").format(endTimeTargetTime
-          ? startTime!.add(Duration(seconds: fastingTime.targetTime))
-          : DateTime.now());
+      if (startTime != null) {
+        timeText = DateFormat("M/d HH : mm").format(endTimeTargetTime
+            ? startTime.add(Duration(seconds: fastingTime.targetTime))
+            : DateTime.now());
+      }
     }
 
     return Container(

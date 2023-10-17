@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/button_tab.dart';
 import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_list_view.dart';
 import 'package:intermittent_fasting/presentation/widget/home/home_timer.dart';
 import 'package:intermittent_fasting/presentation/widget/setting/setting_view.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +19,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.read<FastingProvider>().isClearAfter) {
+        context.read<FastingProvider>().settingData();
+      }
+    });
     _tabController = TabController(
       length: 4,
       vsync: this,

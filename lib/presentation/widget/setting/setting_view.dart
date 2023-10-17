@@ -69,8 +69,7 @@ class SettingView extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Utils.showDeleteDialog(context, () {
-                    SQLiteHelper.clearHistory().then((_) {
-                      PrefsUtils.clear();
+                    context.read<SettingProvider>().allDataClear(() {
                       Navigator.pop(context);
                       Navigator.pushAndRemoveUntil(
                           context,

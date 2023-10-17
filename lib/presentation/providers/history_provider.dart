@@ -16,6 +16,10 @@ class HistoryProvider extends ChangeNotifier {
 
   // Functions
 
+  static void clearData() {
+    _list = [];
+  }
+
   void addHistory(FastingTime fastingTime, String endTime) {
     final newHistory = History(
         startDate: fastingTime.startTime.toString(),
