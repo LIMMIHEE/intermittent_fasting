@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +18,8 @@ class HistoryTopLabel extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-        const Color(0xffFFB82E).withOpacity(0.3),
-        Colors.white,
+        DesignSystem.colors.appPrimary.withOpacity(0.3),
+        DesignSystem.colors.white,
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: Stack(
         children: [
@@ -26,7 +27,7 @@ class HistoryTopLabel extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 20),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
             decoration: ShapeDecoration(
-              color: const Color(0xFFFFB72D),
+              color: DesignSystem.colors.appPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(88),
               ),
@@ -40,25 +41,24 @@ class HistoryTopLabel extends StatelessWidget {
                   child: Center(
                     child: Text(
                       fastingState ? '단식 중' : '식사 중',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+                      style: DesignSystem.typography.heading3(TextStyle(
+                        color: DesignSystem.colors.white,
                         fontWeight: FontWeight.w600,
-                      ),
+                      )),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
               left: 11,
               bottom: 0,
               child: IntrinsicHeight(
                 child: SizedBox(
                   height: 50,
                   child: VerticalDivider(
-                    color: Color(0xFFFFB72D),
+                    color: DesignSystem.colors.appPrimary,
                     thickness: 2,
                   ),
                 ),
@@ -69,9 +69,9 @@ class HistoryTopLabel extends StatelessWidget {
             child: Container(
               width: 6,
               height: 6,
-              decoration: const ShapeDecoration(
-                color: Color(0xFFFFB72D),
-                shape: OvalBorder(),
+              decoration: ShapeDecoration(
+                color: DesignSystem.colors.appPrimary,
+                shape: const OvalBorder(),
               ),
             ),
           ),

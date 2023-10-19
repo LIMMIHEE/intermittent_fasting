@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:provider/provider.dart';
@@ -25,10 +26,10 @@ class FastingRatioLabel extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xffffb72d),
+          color: DesignSystem.colors.appPrimary,
           width: 1,
         ),
-        color: Colors.white,
+        color: DesignSystem.colors.white,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,19 +37,18 @@ class FastingRatioLabel extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xffffb72d),
-              fontSize: 16,
+            style: DesignSystem.typography.title1(TextStyle(
+              color: DesignSystem.colors.appPrimary,
               fontWeight: FontWeight.w600,
-            ),
+            )),
           ),
           Visibility(
             visible: editIcon,
-            child: const Padding(
-              padding: EdgeInsets.only(left: 4),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 4),
               child: Icon(
                 Icons.edit,
-                color: Color(0xffffb72d),
+                color: DesignSystem.colors.appPrimary,
                 size: 18,
               ),
             ),

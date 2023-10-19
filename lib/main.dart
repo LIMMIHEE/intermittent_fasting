@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: '간헐적 단식',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.deepPurple,
             ),
             home: PrefsUtils.getString(PrefsUtils.uid).isNotEmpty
                 ? const HomeScreen()

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class FastingTab extends StatelessWidget {
   const FastingTab(
@@ -25,7 +26,7 @@ class FastingTab extends StatelessWidget {
                 width: 64,
                 height: 15,
                 decoration: ShapeDecoration(
-                  color: Colors.white,
+                  color: DesignSystem.colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -41,7 +42,7 @@ class FastingTab extends StatelessWidget {
                   width: 63,
                   height: 4,
                   decoration: BoxDecoration(
-                      color: const Color(0xBF392E5C),
+                      color: DesignSystem.colors.appSecondary,
                       borderRadius: BorderRadius.circular(16)),
                 ),
               )),
@@ -49,11 +50,7 @@ class FastingTab extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 15),
             child: Text(
               title,
-              style: const TextStyle(
-                color: Color(0xFF392E5C),
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: DesignSystem.typography.title1(),
             ),
           ),
         ],

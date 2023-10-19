@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/time_utils.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
@@ -42,7 +43,7 @@ class _HomeTimerCircleProgressState extends State<HomeTimerCircleProgress> {
                 borderRadius: BorderRadius.circular(200),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
+                    color: DesignSystem.colors.black.withOpacity(0.5),
                     blurRadius: 12,
                     offset: const Offset(0, 0),
                   ),
@@ -50,8 +51,8 @@ class _HomeTimerCircleProgressState extends State<HomeTimerCircleProgress> {
               ),
               child: CircularProgressIndicator(
                   value: elapsedTime / targetTime,
-                  color: const Color(0xffFFB82E),
-                  backgroundColor: const Color(0xffF2F2F2),
+                  color: DesignSystem.colors.appPrimary,
+                  backgroundColor: DesignSystem.colors.backgroundDisabled,
                   strokeWidth: 20)),
         ),
         SizedBox(
@@ -59,7 +60,7 @@ class _HomeTimerCircleProgressState extends State<HomeTimerCircleProgress> {
             height: 280,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: DesignSystem.colors.white,
                 borderRadius: BorderRadius.circular(200),
               ),
             )),
@@ -69,17 +70,12 @@ class _HomeTimerCircleProgressState extends State<HomeTimerCircleProgress> {
             const Text(" "),
             Text(
               TimeUtils().printDuration(Duration(seconds: elapsedTime)),
-              style: const TextStyle(
-                color: Color(0xff392e5c),
-                fontSize: 40,
-                fontWeight: FontWeight.w600,
-              ),
+              style: DesignSystem.typography.display1(),
             ),
-            const Text("현재 진행 시간",
-                style: TextStyle(
-                  color: Color(0xff9d9d9d),
-                  fontSize: 12,
-                )),
+            Text("현재 진행 시간",
+                style: DesignSystem.typography.caption1(TextStyle(
+                    color: DesignSystem.colors.gray700,
+                    fontWeight: FontWeight.w400))),
           ],
         )
       ],

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
-import 'package:intermittent_fasting/data/service/sqlite_helper.dart';
 import 'package:intermittent_fasting/presentation/providers/setting_provider.dart';
 import 'package:intermittent_fasting/presentation/screen/start_screen.dart';
 import 'package:intermittent_fasting/presentation/widget/common/accumulated_date_text.dart';
@@ -18,6 +17,7 @@ class SettingView extends StatelessWidget {
     final isDarkMode =
         context.select((SettingProvider data) => data.isDarkMode);
     return Scaffold(
+      backgroundColor: DesignSystem.colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -32,7 +32,7 @@ class SettingView extends StatelessWidget {
               Transform.scale(
                 scale: 0.85,
                 child: CupertinoSwitch(
-                  activeColor: Colors.black,
+                  activeColor: DesignSystem.colors.black,
                   value: isDarkMode,
                   onChanged: (value) {
                     context.read<SettingProvider>().changeTheme(value);
@@ -45,10 +45,10 @@ class SettingView extends StatelessWidget {
             onTap: () {
               launchUrl(Uri.parse('https://forms.gle/RewNYJtwaZNuPZkH9'));
             },
-            child: const SettingRow(
+            child: SettingRow(
               isLast: true,
               children: [
-                Expanded(
+                const Expanded(
                   child: Text(
                     '의견 보내기',
                   ),
@@ -56,7 +56,7 @@ class SettingView extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 18,
-                  color: Colors.grey,
+                  color: DesignSystem.colors.gray700,
                 )
               ],
             ),
@@ -79,11 +79,9 @@ class SettingView extends StatelessWidget {
                     });
                   });
                 },
-                child: const Text(
+                child: Text(
                   '모든 데이터 삭제하기',
-                  style: TextStyle(
-                    color: Color(0xFFFA3C3C),
-                  ),
+                  style: TextStyle(color: DesignSystem.colors.deleteRed),
                 ),
               )
             ],

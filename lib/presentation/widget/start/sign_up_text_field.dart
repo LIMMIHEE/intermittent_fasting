@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class SignUpTextField extends StatelessWidget {
   const SignUpTextField(
@@ -18,7 +19,7 @@ class SignUpTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 1, color: Color(0xFF392E5C)),
+          side: BorderSide(width: 1, color: DesignSystem.colors.appSecondary),
           borderRadius: BorderRadius.circular(49),
         ),
       ),
@@ -26,7 +27,7 @@ class SignUpTextField extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: const Color(0xFF392E5C),
+            color: DesignSystem.colors.appSecondary,
           ),
           Flexible(
             child: Padding(
@@ -39,10 +40,10 @@ class SignUpTextField extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   border: InputBorder.none,
                   hintText: hintText,
-                  hintStyle: const TextStyle(
-                    color: Color(0xFF9D9D9D),
+                  hintStyle: DesignSystem.typography.body2(TextStyle(
+                    color: DesignSystem.colors.gray700,
                     fontWeight: FontWeight.w400,
-                  ),
+                  )),
                 ),
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/widget/start/start_button.dart';
 
 class WelcomeView extends StatelessWidget {
@@ -14,28 +15,24 @@ class WelcomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(
+            Expanded(
                 child: Padding(
               padding: EdgeInsets.only(top: 120),
               child: Column(
                 children: [
                   Text(
                     '환영합니다!',
-                    style: TextStyle(
-                      color: Color(0xFF392E5C),
-                      fontSize: 34,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: DesignSystem.typography.display2(),
                   ),
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: Text(
                       '단식 시작 전\n몇 가지 설정을 진행해주세요!',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF9D9D9D),
+                      style: DesignSystem.typography.title3(TextStyle(
+                        color: DesignSystem.colors.gray700,
                         fontWeight: FontWeight.w400,
-                      ),
+                      )),
                     ),
                   ),
                 ],
@@ -44,36 +41,31 @@ class WelcomeView extends StatelessWidget {
             Column(
               children: [
                 StartButton(
-                  childWidget: const Text(
+                  childWidget: Text(
                     '앱으로만 사용할래요',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                    style: DesignSystem.typography.body(TextStyle(
+                      color: DesignSystem.colors.white,
                       fontWeight: FontWeight.w600,
-                    ),
+                    )),
                   ),
                   onTap: () => onTap("fastingSet"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: StartButton(
-                    childWidget: const Column(
+                    childWidget: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           '웹으로도 사용할래요',
-                          style: TextStyle(
-                            color: Color(0xFF392E5C),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: DesignSystem.typography.body(),
                         ),
                         Text(
                           '회원가입이 필요합니다',
-                          style: TextStyle(
-                            color: Color(0xFF9D9D9D),
-                            fontSize: 12,
-                          ),
+                          style: DesignSystem.typography.caption1(TextStyle(
+                            color: DesignSystem.colors.gray700,
+                            fontWeight: FontWeight.w400,
+                          )),
                         )
                       ],
                     ),

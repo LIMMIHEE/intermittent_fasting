@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class FastingGridView extends StatelessWidget {
   const FastingGridView(
@@ -31,30 +32,31 @@ class FastingGridView extends StatelessWidget {
               onTap: () => onTap(index, widgetKey),
               child: Container(
                   decoration: ShapeDecoration(
-                    color: Colors.white,
+                    color: DesignSystem.colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    shadows: const [
+                    shadows: [
                       BoxShadow(
-                        color: Color(0x0C000000),
+                        color: DesignSystem.colors.shadow,
                         blurRadius: 4,
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                       )
                     ],
                   ),
                   child: Container(
                     decoration: ShapeDecoration(
                       color: isSelectWidget
-                          ? const Color(0xffFFB82E)
-                          : Colors.white,
+                          ? DesignSystem.colors.appPrimary
+                          : DesignSystem.colors.white,
                       shape: isSelectWidget
                           ? RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             )
                           : RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  width: 1, color: Color(0xFF6E777B)),
+                              side: BorderSide(
+                                  width: 1,
+                                  color: DesignSystem.colors.blueGray),
                               borderRadius: BorderRadius.circular(12),
                             ),
                     ),
@@ -68,8 +70,8 @@ class FastingGridView extends StatelessWidget {
                             fastingMap.values.elementAt(index).first,
                             style: TextStyle(
                               color: isSelectWidget
-                                  ? Colors.white
-                                  : const Color(0xFF6E777B),
+                                  ? DesignSystem.colors.white
+                                  : DesignSystem.colors.blueGray,
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
@@ -80,8 +82,8 @@ class FastingGridView extends StatelessWidget {
                               fastingMap.values.elementAt(index).last,
                               style: TextStyle(
                                 color: isSelectWidget
-                                    ? Colors.white
-                                    : const Color(0xFF9D9D9D),
+                                    ? DesignSystem.colors.white
+                                    : DesignSystem.colors.gray700,
                                 fontSize: 12,
                               ),
                             ),

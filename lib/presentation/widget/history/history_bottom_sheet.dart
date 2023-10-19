@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
 import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
@@ -32,27 +33,21 @@ class HistoryBottomSheet extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
                   child: Text(
                     '식단 메모',
-                    style: TextStyle(
-                      color: Color(0xFF392E5C),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: DesignSystem.typography.heading3(),
                   ),
                 ),
                 TextField(
                   maxLines: 9,
                   controller: controller,
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: controller.text.isEmpty ? '기록이 비어있습니다!' : null,
-                      labelStyle: const TextStyle(
-                        color: Color(0xFF392E5C),
-                        fontSize: 14,
-                      )),
+                    border: InputBorder.none,
+                    hintText: controller.text.isEmpty ? '기록이 비어있습니다!' : null,
+                    labelStyle: DesignSystem.typography.title3(),
+                  ),
                 ),
               ],
             ),

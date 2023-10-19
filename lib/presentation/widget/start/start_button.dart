@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class StartButton extends StatelessWidget {
   const StartButton(
@@ -20,11 +21,13 @@ class StartButton extends StatelessWidget {
           alignment: Alignment.center,
           margin: const EdgeInsets.symmetric(horizontal: 39),
           decoration: ShapeDecoration(
-              color: isOutlineWidget ? Colors.white : const Color(0xFF392E5C),
+              color: isOutlineWidget
+                  ? DesignSystem.colors.white
+                  : DesignSystem.colors.appSecondary,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                     width: isOutlineWidget ? 1 : 0,
-                    color: const Color(0xFF392E5C)),
+                    color: DesignSystem.colors.appSecondary),
                 borderRadius: BorderRadius.circular(49),
               )),
           child: childWidget),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class NoHistoryView extends StatelessWidget {
   const NoHistoryView({
@@ -7,11 +8,13 @@ class NoHistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        '아직 기록 사항이 없습니다!',
-        style: TextStyle(color: Colors.grey),
-      ),
+    return Center(
+      child: Text('아직 기록 사항이 없습니다!',
+          style: DesignSystem.typography.body2(
+            TextStyle(
+                color: DesignSystem.colors.textSecondary,
+                fontWeight: FontWeight.w400),
+          )),
     );
   }
 }

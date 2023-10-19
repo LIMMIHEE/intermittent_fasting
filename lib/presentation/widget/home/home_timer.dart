@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/screen/fasting_rate_screen.dart';
 import 'package:intermittent_fasting/presentation/widget/common/custom_path.dart';
 import 'package:intermittent_fasting/presentation/widget/common/fasting_ratio_label.dart';
@@ -20,7 +21,7 @@ class HomeTimerView extends StatelessWidget {
             clipper: CustomPath(),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFFFB82E).withOpacity(0.2),
+                color: DesignSystem.colors.appPrimary.withOpacity(0.2),
               ),
               width: 300,
               height: 140,

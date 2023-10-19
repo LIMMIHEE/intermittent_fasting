@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class HistorySheetButton extends StatelessWidget {
   const HistorySheetButton(
@@ -17,17 +18,16 @@ class HistorySheetButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
               color: isDeleteButton
-                  ? const Color(0xFFFA3C3C)
-                  : const Color(0xFFFFB72D),
+                  ? DesignSystem.colors.deleteRed
+                  : DesignSystem.colors.saveYellow,
               borderRadius: BorderRadius.circular(16)),
           child: Center(
             child: Text(
               isDeleteButton ? '기록 삭제' : '저장 및 닫기',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+              style: DesignSystem.typography.title1(TextStyle(
+                color: DesignSystem.colors.white,
                 fontWeight: FontWeight.w600,
-              ),
+              )),
             ),
           ),
         ),

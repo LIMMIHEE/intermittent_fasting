@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
 import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/analysis/chart_title.dart';
@@ -53,10 +54,8 @@ class AnalysisFastingChart extends StatelessWidget {
           ) {
             return BarTooltipItem(
               rod.toY.toString(),
-              const TextStyle(
-                color: Color(0xFF392E5C),
-                fontWeight: FontWeight.bold,
-              ),
+              DesignSystem.typography
+                  .title1(const TextStyle(fontWeight: FontWeight.w700)),
             );
           },
         ),
@@ -67,7 +66,7 @@ class AnalysisFastingChart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 40,
             getTitlesWidget: (value, _) {
               final startDay = list.elementAt(value.toInt()).startDate;
               return ChartTitle(
@@ -108,7 +107,7 @@ class AnalysisFastingChart extends StatelessWidget {
           barRods: [
             BarChartRodData(
               toY: parseTime,
-              color: const Color(0xffFFB82E),
+              color: DesignSystem.colors.appPrimary,
             )
           ],
           showingTooltipIndicators: [0],

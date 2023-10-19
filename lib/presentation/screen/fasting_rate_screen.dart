@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/screen/home_screen.dart';
 import 'package:intermittent_fasting/presentation/widget/fasting/fasting_grid_view.dart';
@@ -38,7 +39,7 @@ class _FastingRateScreenState extends State<FastingRateScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFFF1D5),
+      backgroundColor: DesignSystem.colors.backgroundClearYellow,
       body: Stack(
         children: [
           JellyAnim(
@@ -49,19 +50,15 @@ class _FastingRateScreenState extends State<FastingRateScreen>
               jellyCoordinates: 12,
               allowOverFlow: true,
               duration: const Duration(minutes: 1),
-              colors: const [Colors.white],
+              colors: [DesignSystem.colors.white],
               jellyPosition: JellyPosition.bottomCenter),
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 120, bottom: 30),
+              Padding(
+                padding: const EdgeInsets.only(top: 120, bottom: 30),
                 child: Text(
                   '단식 비율',
-                  style: TextStyle(
-                    color: Color(0xFF392E5C),
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: DesignSystem.typography.display2(),
                 ),
               ),
               TabBar(
@@ -129,19 +126,18 @@ class _FastingRateScreenState extends State<FastingRateScreen>
                   padding: const EdgeInsets.symmetric(vertical: 19),
                   decoration: ShapeDecoration(
                     color: isSelect
-                        ? const Color(0xFFFFB72D)
-                        : const Color(0xff9D9D9D),
+                        ? DesignSystem.colors.appPrimary
+                        : DesignSystem.colors.gray700,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(88),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     '완료',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                    style: DesignSystem.typography.heading3(TextStyle(
+                      color: DesignSystem.colors.white,
                       fontWeight: FontWeight.w600,
-                    ),
+                    )),
                   ),
                 ),
               )

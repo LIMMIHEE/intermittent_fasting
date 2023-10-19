@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intl/intl.dart';
 
 class HistoryTimeText extends StatelessWidget {
@@ -13,7 +14,7 @@ class HistoryTimeText extends StatelessWidget {
     return Text(
       dateFormatText(timeText),
       style: TextStyle(
-        color: const Color(0xFF9D9D9D),
+        color: DesignSystem.colors.gray700,
         fontSize: fontSize,
         fontWeight: FontWeight.w400,
       ),

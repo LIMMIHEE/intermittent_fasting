@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class Utils {
   static void showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       behavior: SnackBarBehavior.floating,
       duration: const Duration(milliseconds: 2000),
-      backgroundColor: const Color(0xFF392E5C),
+      backgroundColor: DesignSystem.colors.appSecondary,
       content: Text(text),
     ));
   }
@@ -28,9 +29,9 @@ class Utils {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(
+              child: Text(
                 '삭제',
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(color: DesignSystem.colors.deleteRed),
               ),
               onPressed: () {
                 onDelete();

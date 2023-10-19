@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
 import 'package:intermittent_fasting/presentation/widget/common/fasting_ratio_label.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_fasting_time_text.dart';
@@ -37,9 +38,9 @@ class HistoryListItem extends StatelessWidget {
                     history: history,
                     fontSize: 16,
                   )),
-              const Icon(
+              Icon(
                 Icons.keyboard_arrow_right_rounded,
-                color: Color(0xff9D9D9D),
+                color: DesignSystem.colors.gray700,
               )
             ],
           ),

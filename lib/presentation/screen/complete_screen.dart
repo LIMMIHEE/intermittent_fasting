@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
@@ -19,7 +20,7 @@ class CompleteScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: ColoredBox(
-        color: const Color(0xFFFFB82E).withOpacity(0.2),
+        color: DesignSystem.colors.appPrimary.withOpacity(0.2),
         child: Stack(
           children: [
             JellyAnim(
@@ -32,7 +33,7 @@ class CompleteScreen extends StatelessWidget {
                 jellyCoordinates: 12,
                 allowOverFlow: true,
                 duration: const Duration(minutes: 1),
-                colors: const [Color(0xFFFFFCF7)],
+                colors: [DesignSystem.colors.gray100],
                 jellyPosition: JellyPosition.bottomCenter),
             Column(
               children: [
@@ -54,24 +55,17 @@ class CompleteScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Text(
+                          Text(
                             '식단 메모',
-                            style: TextStyle(
-                              color: Color(0xFF392E5C),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: DesignSystem.typography.heading3(),
                           ),
                           TextField(
                             maxLines: 9,
                             controller: controller,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "오늘의 식단 일기 등을 적어주세요!",
-                                labelStyle: TextStyle(
-                                  color: Color(0xFF392E5C),
-                                  fontSize: 12,
-                                )),
+                                labelStyle: DesignSystem.typography.caption1()),
                           )
                         ],
                       ),
@@ -102,11 +96,11 @@ class CompleteScreen extends StatelessWidget {
                         horizontal: 40, vertical: 40),
                     decoration: ShapeDecoration(
                       color: isFastingTimeDone
-                          ? Colors.white
-                          : const Color(0xFFFFB72D),
+                          ? DesignSystem.colors.white
+                          : DesignSystem.colors.appPrimary,
                       shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            width: 0.75, color: Color(0xFFFFB72D)),
+                        side: BorderSide(
+                            width: 0.75, color: DesignSystem.colors.appPrimary),
                         borderRadius: BorderRadius.circular(56),
                       ),
                     ),
@@ -114,8 +108,8 @@ class CompleteScreen extends StatelessWidget {
                       isFastingTimeDone ? '식사 시간 시작' : '단식 시간 시작',
                       style: TextStyle(
                         color: isFastingTimeDone
-                            ? const Color(0xFFFFB72D)
-                            : Colors.white,
+                            ? DesignSystem.colors.appPrimary
+                            : DesignSystem.colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -143,11 +137,8 @@ class CompleteScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 25),
             child: Text(
               '$hours:$minutes',
-              style: const TextStyle(
-                color: Color(0xFF392E5C),
-                fontSize: 55,
-                fontWeight: FontWeight.w600,
-              ),
+              style: DesignSystem.typography.heading1(
+                  const TextStyle(fontSize: 55, fontWeight: FontWeight.w700)),
             ),
           ),
           const TimerRowContainer()

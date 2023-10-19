@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/widget/start/sign_up_text_field.dart';
 import 'package:intermittent_fasting/presentation/widget/start/start_button.dart';
 
@@ -25,10 +26,10 @@ class SignUpView extends StatelessWidget {
               left: 24,
               child: GestureDetector(
                   onTap: () => back(),
-                  child: const Icon(
+                  child: Icon(
                     Icons.arrow_back_ios,
                     size: 28,
-                    color: Color(0xFF392E5C),
+                    color: DesignSystem.colors.appSecondary,
                   ))),
         ),
         Center(
@@ -42,15 +43,11 @@ class SignUpView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 120),
                   child: Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 40),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 40),
                         child: Text(
                           '회원가입',
-                          style: TextStyle(
-                            color: Color(0xFF392E5C),
-                            fontSize: 32,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: DesignSystem.typography.display2(),
                         ),
                       ),
                       SignUpTextField(
@@ -67,13 +64,12 @@ class SignUpView extends StatelessWidget {
                   ),
                 )),
                 StartButton(
-                  childWidget: const Text(
+                  childWidget: Text(
                     '가입하기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                    style: DesignSystem.typography.title1(TextStyle(
+                      color: DesignSystem.colors.white,
                       fontWeight: FontWeight.w600,
-                    ),
+                    )),
                   ),
                   onTap: () => signOnTap(),
                 )

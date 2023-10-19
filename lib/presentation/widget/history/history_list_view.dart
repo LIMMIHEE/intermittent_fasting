@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/accumulated_date_text.dart';
 import 'package:intermittent_fasting/presentation/widget/common/no_history_view.dart';
@@ -20,7 +21,7 @@ class HistoryListView extends StatelessWidget {
         }
 
         return Container(
-          color: Colors.white,
+          color: DesignSystem.colors.white,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/data/service/firebase_auth_service.dart';
@@ -22,7 +23,7 @@ class StartScreen extends StatelessWidget {
               jellyCoordinates: 4,
               allowOverFlow: true,
               duration: const Duration(minutes: 1),
-              colors: const [Color(0xffFFF1D5)],
+              colors: [DesignSystem.colors.backgroundClearYellow],
               jellyPosition: JellyPosition.topLeft),
           JellyAnim(
               jellyCount: 1,
@@ -32,7 +33,7 @@ class StartScreen extends StatelessWidget {
               jellyCoordinates: 12,
               allowOverFlow: true,
               duration: const Duration(minutes: 1),
-              colors: const [Color(0xffFFF1D5)],
+              colors: [DesignSystem.colors.backgroundClearYellow],
               jellyPosition: JellyPosition.bottomCenter),
           OverlappingWidget(),
         ],

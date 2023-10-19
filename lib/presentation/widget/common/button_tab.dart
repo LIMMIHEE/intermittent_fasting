@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/button_tab_item.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class ButtonTab extends StatelessWidget {
     final fastingTime = context.read<FastingProvider>().fastingTime;
     final isTimerActive = context.read<FastingProvider>().isTimerActive;
 
-    return Container(
+    return SizedBox(
       height: tabController.index == 0 ? 260 : 145,
       child: Stack(
         alignment: AlignmentDirectional.center,
@@ -26,10 +27,10 @@ class ButtonTab extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(16), topLeft: Radius.circular(16)),
-              color: Colors.white,
+              color: DesignSystem.colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: DesignSystem.colors.black.withOpacity(0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 8),
                 ),
@@ -60,8 +61,8 @@ class ButtonTab extends StatelessWidget {
                         title: "설정",
                       )
                     ],
-                    labelColor: const Color(0xffFFB82E),
-                    unselectedLabelColor: Colors.black,
+                    labelColor: DesignSystem.colors.appPrimary,
+                    unselectedLabelColor: DesignSystem.colors.black,
                     indicatorColor: Colors.transparent,
                     controller: tabController,
                   ),
@@ -88,11 +89,11 @@ class ButtonTab extends StatelessWidget {
                   height: 45,
                   margin: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: const Color(0xffFFB82E),
+                    color: DesignSystem.colors.appPrimary,
                     borderRadius: BorderRadius.circular(50),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xffFFB82E).withOpacity(0.2),
+                        color: DesignSystem.colors.appPrimary.withOpacity(0.2),
                         blurRadius: 3,
                         offset: const Offset(0, 8),
                       ),
@@ -103,10 +104,9 @@ class ButtonTab extends StatelessWidget {
                     children: [
                       Text(
                         fastingTime.startTime == null ? "시작" : "종료",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
+                        style: DesignSystem.typography.heading4(TextStyle(
+                            color: DesignSystem.colors.white,
+                            fontWeight: FontWeight.w600)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 3),
@@ -114,7 +114,7 @@ class ButtonTab extends StatelessWidget {
                           fastingTime.startTime == null
                               ? Icons.play_arrow_rounded
                               : Icons.pause,
-                          color: Colors.white,
+                          color: DesignSystem.colors.white,
                         ),
                       )
                     ],

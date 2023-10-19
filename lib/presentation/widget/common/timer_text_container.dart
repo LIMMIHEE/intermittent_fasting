@@ -1,5 +1,6 @@
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -44,32 +45,26 @@ class TimerTextContainer extends StatelessWidget {
             children: [
               Text(text,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(0xff392e5c),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  )),
+                  style: DesignSystem.typography.heading4()),
               Visibility(
                 visible: isEdit,
                 child: GestureDetector(
                   onTap: () {
                     BottomPicker.dateTime(
                       title: '시작 시간을 선택해주세요.',
-                      titleStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
+                      titleStyle: DesignSystem.typography.heading4(TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: DesignSystem.colors.black,
+                      )),
                       initialDateTime: startTime,
                       onSubmit: (date) {
                         context.read<FastingProvider>().updateStartTime(date);
-                        print(date);
                       },
-                      iconColor: Colors.black,
+                      iconColor: DesignSystem.colors.black,
                       minDateTime:
                           DateTime.now().subtract(const Duration(days: 5)),
                       maxDateTime: DateTime.now(),
-                      buttonSingleColor: const Color(0xFFFFB82E),
+                      buttonSingleColor: DesignSystem.colors.appPrimary,
                     ).show(context);
                   },
                   child: const Padding(
@@ -85,10 +80,9 @@ class TimerTextContainer extends StatelessWidget {
           ),
           Text(
             timeText,
-            style: const TextStyle(
-              color: Color(0xff9d9d9d),
-              fontSize: 15,
-            ),
+            style: DesignSystem.typography.title2(TextStyle(
+                color: DesignSystem.colors.gray700,
+                fontWeight: FontWeight.w600)),
           )
         ],
       ),
