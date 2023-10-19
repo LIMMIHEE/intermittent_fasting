@@ -28,6 +28,7 @@ dependencies:
   isar:
   isar_flutter_libs:  # contains Isar Core
   url_launcher:
+  fl_chart:
 
 dev_dependencies:
   flutter_test:

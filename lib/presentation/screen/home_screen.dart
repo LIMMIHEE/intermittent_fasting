@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
+import 'package:intermittent_fasting/presentation/widget/analysis/analysis_view.dart';
 import 'package:intermittent_fasting/presentation/widget/common/button_tab.dart';
 import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_list_view.dart';
@@ -41,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         children: [
           TabBarView(
             controller: _tabController,
-            children: [
-              const HomeTimerView(),
-              const HistoryListView(),
-              Container(),
-              const SettingView(),
+            children: const [
+              HomeTimerView(),
+              HistoryListView(),
+              AnalysisView(),
+              SettingView(),
             ],
           ),
           Align(

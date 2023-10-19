@@ -61,6 +61,7 @@ class HistoryProvider extends ChangeNotifier {
 
   void _notify() {
     _list = [..._list];
+    _list.sort((b, a) => a.id.compareTo(b.id));
     notifyListeners();
   }
 }

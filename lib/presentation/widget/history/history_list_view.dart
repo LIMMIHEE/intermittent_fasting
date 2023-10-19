@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/accumulated_date_text.dart';
+import 'package:intermittent_fasting/presentation/widget/common/no_history_view.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_bottom_sheet.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_list_item.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_top_label.dart';
@@ -15,15 +16,9 @@ class HistoryListView extends StatelessWidget {
       builder: (BuildContext context, HistoryProvider fastingHistory,
           Widget? child) {
         if (fastingHistory.list.isEmpty) {
-          return const Center(
-            child: Text(
-              '아직 기록 사항이 없습니다!',
-              style: TextStyle(color: Colors.grey),
-            ),
-          );
+          return const NoHistoryView();
         }
 
-        fastingHistory.list.sort((b, a) => a.id.compareTo(b.id));
         return Container(
           color: Colors.white,
           child: SingleChildScrollView(
