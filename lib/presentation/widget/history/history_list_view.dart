@@ -21,7 +21,7 @@ class HistoryListView extends StatelessWidget {
         }
 
         return Container(
-          color: DesignSystem.colors.white,
+          color: DesignSystem.colors.backgroundWhite,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

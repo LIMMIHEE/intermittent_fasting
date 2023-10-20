@@ -33,7 +33,7 @@ class CompleteScreen extends StatelessWidget {
                 jellyCoordinates: 12,
                 allowOverFlow: true,
                 duration: const Duration(minutes: 1),
-                colors: [DesignSystem.colors.gray100],
+                colors: [DesignSystem.colors.white.withOpacity(0.2)],
                 jellyPosition: JellyPosition.bottomCenter),
             Column(
               children: [

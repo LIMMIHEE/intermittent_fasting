@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
 
@@ -15,7 +16,9 @@ class HistoryFastingTimeText extends StatelessWidget {
       fastingTimeText(history),
       textAlign: TextAlign.right,
       style: TextStyle(
-        color: DesignSystem.colors.black,
+        color: Config.isLightTheme()
+            ? DesignSystem.colors.black
+            : DesignSystem.colors.white,
         fontSize: fontSize,
         fontWeight: FontWeight.w600,
       ),

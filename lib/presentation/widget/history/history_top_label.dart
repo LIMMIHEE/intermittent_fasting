@@ -19,7 +19,7 @@ class HistoryTopLabel extends StatelessWidget {
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
         DesignSystem.colors.appPrimary.withOpacity(0.3),
-        DesignSystem.colors.white,
+        DesignSystem.colors.backgroundWhite,
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: Stack(
         children: [

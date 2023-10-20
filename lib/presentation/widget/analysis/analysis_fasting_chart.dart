@@ -54,8 +54,9 @@ class AnalysisFastingChart extends StatelessWidget {
           ) {
             return BarTooltipItem(
               rod.toY.toString(),
-              DesignSystem.typography
-                  .title1(const TextStyle(fontWeight: FontWeight.w700)),
+              DesignSystem.typography.title1(TextStyle(
+                  color: DesignSystem.colors.textPrimary,
+                  fontWeight: FontWeight.w700)),
             );
           },
         ),

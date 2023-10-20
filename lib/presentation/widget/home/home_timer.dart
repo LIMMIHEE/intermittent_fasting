@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/screen/fasting_rate_screen.dart';
 import 'package:intermittent_fasting/presentation/widget/common/custom_path.dart';
@@ -12,37 +13,42 @@ class HomeTimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Positioned.fill(
-          top: 0,
-          child: ClipPath(
-            clipper: CustomPath(),
-            child: Container(
-              decoration: BoxDecoration(
-                color: DesignSystem.colors.appPrimary.withOpacity(0.2),
+    return Container(
+      color: DesignSystem.colors.backgroundWhite,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned.fill(
+            top: 0,
+            child: ClipPath(
+              clipper: CustomPath(),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: (Config.isLightTheme()
+                      ? DesignSystem.colors.appPrimary.withOpacity(0.2)
+                      : DesignSystem.colors.appPrimary.withOpacity(0.6)),
+                ),
+                width: 300,
+                height: 140,
               ),
-              width: 300,
-              height: 140,
             ),
           ),
-        ),
-        Positioned(
-          top: 110,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const FastingRateScreen(comeStartScreen: false)));
-            },
-            child: const FastingRatioLabel(editIcon: true),
+          Positioned(
+            top: 110,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const FastingRateScreen(comeStartScreen: false)));
+              },
+              child: const FastingRatioLabel(editIcon: true),
+            ),
           ),
-        ),
-        const HomeTimerCircleProgress(),
-      ],
+          const HomeTimerCircleProgress(),
+        ],
+      ),
     );
   }
 }

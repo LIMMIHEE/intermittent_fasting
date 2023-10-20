@@ -17,16 +17,17 @@ class SettingView extends StatelessWidget {
     final isDarkMode =
         context.select((SettingProvider data) => data.isDarkMode);
     return Scaffold(
-      backgroundColor: DesignSystem.colors.white,
+      backgroundColor: DesignSystem.colors.backgroundWhite,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const AccumulatedDateText(),
           SettingRow(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   '다크모드',
+                  style: DesignSystem.typography.body2(),
                 ),
               ),
               Transform.scale(
@@ -48,9 +49,10 @@ class SettingView extends StatelessWidget {
             child: SettingRow(
               isLast: true,
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
                     '의견 보내기',
+                    style: DesignSystem.typography.body2(),
                   ),
                 ),
                 Icon(

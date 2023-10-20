@@ -13,8 +13,9 @@ class ChartTitle extends StatelessWidget {
       axisSide: AxisSide.bottom,
       space: 16,
       child: Text(title,
-          style: DesignSystem.typography
-              .title3(const TextStyle(fontWeight: FontWeight.w700))),
+          style: DesignSystem.typography.title3(TextStyle(
+              fontWeight: FontWeight.w700,
+              color: DesignSystem.colors.textPrimary))),
     );
   }
 }

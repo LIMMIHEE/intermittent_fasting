@@ -8,7 +8,7 @@ class AnalysisView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: DesignSystem.colors.white,
+      backgroundColor: DesignSystem.colors.backgroundWhite,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

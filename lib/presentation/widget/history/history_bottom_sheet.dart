@@ -24,114 +24,117 @@ class HistoryBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
-                  child: Text(
-                    '식단 메모',
-                    style: DesignSystem.typography.heading3(),
-                  ),
-                ),
-                TextField(
-                  maxLines: 9,
-                  controller: controller,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: controller.text.isEmpty ? '기록이 비어있습니다!' : null,
-                    labelStyle: DesignSystem.typography.title3(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 15),
-          child: Divider(),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: Column(
-            children: [
-              Row(
+    return Container(
+      color: DesignSystem.colors.backgroundWhite,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FastingRatioLabel(
-                    isFastingScreen: false,
-                    ratio: history.fastingRatio,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: Text(
+                      '식단 메모',
+                      style: DesignSystem.typography.heading3(),
+                    ),
                   ),
-                  Expanded(
-                    child: HistoryFastingTimeText(
-                      history: history,
+                  TextField(
+                    maxLines: 9,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: controller.text.isEmpty ? '기록이 비어있습니다!' : null,
+                      labelStyle: DesignSystem.typography.title3(),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    HistoryTimeText(
-                      timeText: history.startDate,
+                    FastingRatioLabel(
+                      isFastingScreen: false,
+                      ratio: history.fastingRatio,
                     ),
                     Expanded(
-                      child: Image.asset(
-                        'assets/images/icon_time_arrow.png',
-                        width: 35,
-                        height: 35,
+                      child: HistoryFastingTimeText(
+                        history: history,
                       ),
                     ),
-                    HistoryTimeText(
-                      timeText: history.endDate,
-                    ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: Platform.isIOS ? 15 : 0,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    children: [
+                      HistoryTimeText(
+                        timeText: history.startDate,
+                      ),
+                      Expanded(
+                        child: Image.asset(
+                          'assets/images/icon_time_arrow.png',
+                          width: 35,
+                          height: 35,
+                        ),
+                      ),
+                      HistoryTimeText(
+                        timeText: history.endDate,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    HistorySheetButton(
-                      onTap: () {
-                        Utils.showDeleteDialog(
-                            context,
-                            () => () {
-                                  context
-                                      .read<HistoryProvider>()
-                                      .deleteHistory(history);
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                });
-                      },
-                      isDeleteButton: true,
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    HistorySheetButton(
-                      onTap: () {
-                        context
-                            .read<HistoryProvider>()
-                            .updateHistoryMemo(history.id, controller.text);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
-      ],
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: Platform.isIOS ? 15 : 0,
+                  ),
+                  child: Row(
+                    children: [
+                      HistorySheetButton(
+                        onTap: () {
+                          Utils.showDeleteDialog(
+                              context,
+                              () => () {
+                                    context
+                                        .read<HistoryProvider>()
+                                        .deleteHistory(history);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  });
+                        },
+                        isDeleteButton: true,
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      HistorySheetButton(
+                        onTap: () {
+                          context
+                              .read<HistoryProvider>()
+                              .updateHistoryMemo(history.id, controller.text);
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
