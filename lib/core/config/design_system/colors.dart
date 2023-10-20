@@ -34,7 +34,7 @@ abstract class _DarkScheme {
   static const Color deleteRed = Color(0xFFFA3C3C);
   static const Color shadow = Color(0x0cffffff);
   static const Color clearYellow = Color(0xff544d42);
-  static const Color textPrimary = Color(0xFFE3D4B8);
+  static const Color textPrimary = Color(0xFF392E5C);
   static const Color backgroundWhite = Color(0xFF171326);
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/button_tab_item.dart';
@@ -82,7 +83,7 @@ class ButtonTab extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
+                    color: DesignSystem.colors.backgroundWhite,
                     borderRadius: BorderRadius.circular(50)),
                 child: Container(
                   width: 110,

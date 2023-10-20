@@ -14,6 +14,7 @@ class SettingProvider extends ChangeNotifier {
 
   void changeTheme(bool isDark) {
     Config.themeNotifier.value = isDark ? ThemeMode.dark : ThemeMode.light;
+    PrefsUtils.setBool(PrefsUtils.darkMode, isDark);
     isDarkMode = isDark;
     notifyListeners();
   }

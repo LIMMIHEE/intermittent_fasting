@@ -22,9 +22,9 @@ class FastingRatioLabel extends StatelessWidget {
     final title = titleText(fastingTime);
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(999),
         border: Border.all(
           color: DesignSystem.colors.appPrimary,
           width: 1,

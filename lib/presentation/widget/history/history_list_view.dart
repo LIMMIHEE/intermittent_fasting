@@ -30,9 +30,14 @@ class HistoryListView extends StatelessWidget {
                 const AccumulatedDateText(),
                 const HistoryTopLabel(),
                 fastingHistory.list.isEmpty
-                    ? const Expanded(
+                    ? Expanded(
                         child: Center(
-                          child: Text("기록이 비어있습니다!"),
+                          child: Text(
+                            "기록이 비어있습니다!",
+                            style: DesignSystem.typography.body2(TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: DesignSystem.colors.textSecondary)),
+                          ),
                         ),
                       )
                     : Flexible(

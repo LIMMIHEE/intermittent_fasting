@@ -48,6 +48,9 @@ class HistoryBottomSheet extends StatelessWidget {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: controller.text.isEmpty ? '기록이 비어있습니다!' : null,
+                      hintStyle: DesignSystem.typography.body2(TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: DesignSystem.colors.textSecondary)),
                       labelStyle: DesignSystem.typography.title3(),
                     ),
                   ),
