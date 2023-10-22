@@ -107,15 +107,13 @@ class HistoryBottomSheet extends StatelessWidget {
                     children: [
                       HistorySheetButton(
                         onTap: () {
-                          Utils.showDeleteDialog(
-                              context,
-                              () => () {
-                                    context
-                                        .read<HistoryProvider>()
-                                        .deleteHistory(history);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  });
+                          Utils.showDeleteDialog(context, () {
+                            context
+                                .read<HistoryProvider>()
+                                .deleteHistory(history);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          });
                         },
                         isDeleteButton: true,
                       ),

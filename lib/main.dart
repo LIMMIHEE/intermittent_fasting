@@ -13,8 +13,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsUtils.init();
 
-  HistoryProvider();
-
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => FastingProvider()),

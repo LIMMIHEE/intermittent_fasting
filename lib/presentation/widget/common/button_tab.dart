@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
+import 'package:intermittent_fasting/presentation/screen/complete_screen.dart';
 import 'package:intermittent_fasting/presentation/widget/common/button_tab_item.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +78,10 @@ class ButtonTab extends StatelessWidget {
                 if (!isTimerActive) {
                   context.read<FastingProvider>().startTimeSet();
                 } else {
-                  context.read<FastingProvider>().endTimeSet(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CompleteScreen()));
                 }
               },
               child: Container(

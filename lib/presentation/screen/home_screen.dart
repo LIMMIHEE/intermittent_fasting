@@ -4,7 +4,7 @@ import 'package:intermittent_fasting/presentation/widget/analysis/analysis_view.
 import 'package:intermittent_fasting/presentation/widget/common/button_tab.dart';
 import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
 import 'package:intermittent_fasting/presentation/widget/history/history_list_view.dart';
-import 'package:intermittent_fasting/presentation/widget/home/home_timer.dart';
+import 'package:intermittent_fasting/presentation/widget/home/home_timer_view.dart';
 import 'package:intermittent_fasting/presentation/widget/setting/setting_view.dart';
 import 'package:provider/provider.dart';
 

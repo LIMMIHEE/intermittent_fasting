@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
 import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
-import 'package:intermittent_fasting/presentation/screen/complete_screen.dart';
 
 class FastingProvider extends ChangeNotifier {
   static FastingTime _fastingTime = FastingTime();
@@ -85,19 +84,14 @@ class FastingProvider extends ChangeNotifier {
     _saveNotify();
   }
 
-  Future<void> endTimeSet(BuildContext context) async {
-    final result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CompleteScreen()));
-
-    if (result != null) {
-      _fastingTime.isFasting = !_fastingTime.isFasting;
-      _fastingTime.startTime = DateTime.now();
-      _saveNotify();
-    }
+  void endTimeSet() {
+    _fastingTime.isFasting = !_fastingTime.isFasting;
+    _fastingTime.startTime = DateTime.now();
+    _saveNotify();
   }
 
   void _saveNotify() {
-    _fastingTime = FastingTime().copyWith(
+    _fastingTime = _fastingTime.copyWith(
         isFasting: _fastingTime.isFasting,
         startTime: _fastingTime.startTime ?? DateTime.now(),
         fastingRatio: _fastingTime.fastingRatio,

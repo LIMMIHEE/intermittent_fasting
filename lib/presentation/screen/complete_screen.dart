@@ -74,6 +74,7 @@ class CompleteScreen extends StatelessWidget {
                 )),
                 GestureDetector(
                   onTap: () async {
+                    context.read<FastingProvider>().endTimeSet();
                     if (isFastingTimeDone) {
                       context
                           .read<HistoryProvider>()
@@ -85,8 +86,7 @@ class CompleteScreen extends StatelessWidget {
                           .read<HistoryProvider>()
                           .updateHistoryMemo(id, controller.text);
                     }
-
-                    Navigator.pop(context, {"isDone"});
+                    Navigator.pop(context);
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
