@@ -31,7 +31,7 @@ class WelcomeView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: DesignSystem.typography.title3(TextStyle(
                         color: DesignSystem.colors.gray700,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                       )),
                     ),
                   ),

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
+import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class SettingRow extends StatelessWidget {
-  const SettingRow({super.key, required this.children, this.isLast = false});
+  const SettingRow(
+      {super.key,
+      required this.title,
+      required this.children,
+      this.isLast = false});
 
+  final String title;
   final List<Widget> children;
   final bool isLast;
 
@@ -15,7 +22,20 @@ class SettingRow extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 25),
-          child: Row(children: children),
+          child: Row(children: [
+            Expanded(
+              child: Text(
+                title,
+                style: DesignSystem.typography.body2(TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Config.isLightTheme()
+                      ? DesignSystem.colors.textPrimary
+                      : DesignSystem.colors.white,
+                )),
+              ),
+            ),
+            ...children
+          ]),
         ),
         Visibility(
           visible: isLast,

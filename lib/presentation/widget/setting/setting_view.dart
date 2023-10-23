@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/presentation/providers/setting_provider.dart';
@@ -23,13 +24,8 @@ class SettingView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SettingRow(
+              title: '다크모드',
               children: [
-                Expanded(
-                  child: Text(
-                    '다크모드',
-                    style: DesignSystem.typography.body2(),
-                  ),
-                ),
                 Transform.scale(
                   scale: 0.85,
                   child: CupertinoSwitch(
@@ -47,14 +43,9 @@ class SettingView extends StatelessWidget {
                 launchUrl(Uri.parse('https://forms.gle/RewNYJtwaZNuPZkH9'));
               },
               child: SettingRow(
+                title: '의견 보내기',
                 isLast: true,
                 children: [
-                  Expanded(
-                    child: Text(
-                      '의견 보내기',
-                      style: DesignSystem.typography.body2(),
-                    ),
-                  ),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 18,
@@ -66,28 +57,28 @@ class SettingView extends StatelessWidget {
             const SizedBox(
               height: 72,
             ),
-            SettingRow(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Utils.showDeleteDialog(context, () {
-                      context.read<SettingProvider>().allDataClear(() {
-                        Navigator.pop(context);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const StartScreen()),
-                            (route) => false);
-                      });
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: GestureDetector(
+                onTap: () {
+                  Utils.showDeleteDialog(context, () {
+                    context.read<SettingProvider>().allDataClear(() {
+                      Config.themeNotifier.value = ThemeMode.light;
+                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const StartScreen()),
+                          (route) => false);
                     });
-                  },
-                  child: Text(
-                    '모든 데이터 삭제하기',
-                    style: TextStyle(color: DesignSystem.colors.deleteRed),
-                  ),
-                )
-              ],
-            ),
+                  });
+                },
+                child: Text(
+                  '모든 데이터 삭제하기',
+                  style: TextStyle(color: DesignSystem.colors.deleteRed),
+                ),
+              ),
+            )
           ],
         ),
       ),

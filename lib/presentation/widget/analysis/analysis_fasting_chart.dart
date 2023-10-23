@@ -2,45 +2,34 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
-import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/analysis/chart_title.dart';
-import 'package:intermittent_fasting/presentation/widget/common/no_history_view.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class AnalysisFastingChart extends StatelessWidget {
-  const AnalysisFastingChart({super.key});
+  const AnalysisFastingChart({super.key, required this.historyList});
+
+  final List<History> historyList;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HistoryProvider>(builder:
-        (BuildContext context, HistoryProvider historyProvider, Widget? child) {
-      if (historyProvider.list.isEmpty) {
-        return const NoHistoryView();
-      }
-
-      final historyList = historyProvider.list;
-      historyList.sort((a, b) => a.id.compareTo(b.id));
-
-      return AspectRatio(
-        aspectRatio: 1,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
-          child: BarChart(
-            BarChartData(
-              barTouchData: barTouchData,
-              titlesData: titlesData(historyList),
-              borderData: borderData,
-              barGroups: barGroups(historyList.length > 6
-                  ? historyList.sublist(0, 7)
-                  : historyList),
-              gridData: const FlGridData(show: false),
-              alignment: BarChartAlignment.spaceAround,
-            ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: BarChart(
+          BarChartData(
+            barTouchData: barTouchData,
+            titlesData: titlesData(historyList),
+            borderData: borderData,
+            barGroups: barGroups(historyList.length > 6
+                ? historyList.sublist(0, 7)
+                : historyList),
+            gridData: const FlGridData(show: false),
+            alignment: BarChartAlignment.spaceAround,
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 
   BarTouchData get barTouchData => BarTouchData(
@@ -111,7 +100,7 @@ class AnalysisFastingChart extends StatelessWidget {
           barRods: [
             BarChartRodData(
               toY: parseTime,
-              color: DesignSystem.colors.appPrimary,
+              color: DesignSystem.colors.mainColor,
             )
           ],
           showingTooltipIndicators: [0],

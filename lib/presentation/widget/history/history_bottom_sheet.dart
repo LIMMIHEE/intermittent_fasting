@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/utils.dart';
 import 'package:intermittent_fasting/domain/entities/history.dart';
@@ -39,7 +40,12 @@ class HistoryBottomSheet extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 25),
                     child: Text(
                       '식단 메모',
-                      style: DesignSystem.typography.heading3(),
+                      style: DesignSystem.typography.heading3(TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Config.isLightTheme()
+                            ? DesignSystem.colors.textPrimary
+                            : DesignSystem.colors.white,
+                      )),
                     ),
                   ),
                   TextField(

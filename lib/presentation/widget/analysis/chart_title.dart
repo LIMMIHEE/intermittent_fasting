@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intermittent_fasting/core/config.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 
 class ChartTitle extends StatelessWidget {
@@ -14,8 +15,11 @@ class ChartTitle extends StatelessWidget {
       space: 16,
       child: Text(title,
           style: DesignSystem.typography.title3(TextStyle(
-              fontWeight: FontWeight.w700,
-              color: DesignSystem.colors.textPrimary))),
+            fontWeight: FontWeight.w700,
+            color: Config.isLightTheme()
+                ? DesignSystem.colors.textPrimary
+                : DesignSystem.colors.white,
+          ))),
     );
   }
 }

@@ -13,19 +13,19 @@ class HistoryListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HistoryProvider>(
-      builder: (BuildContext context, HistoryProvider historyProvider,
-          Widget? child) {
-        if (historyProvider.list.isEmpty) {
-          return const NoHistoryView();
-        }
+    return Container(
+      color: DesignSystem.colors.backgroundWhite,
+      child: Consumer<HistoryProvider>(
+        builder: (BuildContext context, HistoryProvider historyProvider,
+            Widget? child) {
+          if (historyProvider.list.isEmpty) {
+            return const NoHistoryView();
+          }
 
-        final historyList = historyProvider.list;
-        historyList.sort((b, a) => a.id.compareTo(b.id));
+          final historyList = historyProvider.list;
+          historyList.sort((b, a) => a.id.compareTo(b.id));
 
-        return Container(
-          color: DesignSystem.colors.backgroundWhite,
-          child: SingleChildScrollView(
+          return SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,9 +77,9 @@ class HistoryListView extends StatelessWidget {
                       ))
               ],
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
