@@ -23,7 +23,7 @@ class HistoryProvider extends ChangeNotifier {
   Future<void> addHistory(FastingTime fastingTime, String endTime) async {
     final lastHistory = await SQLiteHelper.getLastHistory();
     final newHistory = History(
-        id: lastHistory.id + 1,
+        id: (lastHistory != null ? lastHistory.id : 0) + 1,
         startDate: fastingTime.startTime.toString(),
         endDate: endTime,
         fastingRatio: fastingTime.fastingRatio,

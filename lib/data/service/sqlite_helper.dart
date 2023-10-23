@@ -75,11 +75,14 @@ class SQLiteHelper {
             memo: maps[index]['memo'])).first;
   }
 
-  static Future<History> getLastHistory() async {
+  static Future<History?> getLastHistory() async {
     Database db = await getDatabase;
 
     final List<Map> maps =
         await db.query('history', orderBy: "id DESC", limit: 1);
+    if (maps.isEmpty) {
+      return null;
+    }
     return List.generate(
         1,
         (index) => History(
