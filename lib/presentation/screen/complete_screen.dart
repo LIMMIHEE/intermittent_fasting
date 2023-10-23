@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intermittent_fasting/core/config/design_system/design_system.dart';
 import 'package:intermittent_fasting/core/utils/prefs_utils.dart';
+import 'package:intermittent_fasting/domain/entities/fasting_time.dart';
 import 'package:intermittent_fasting/presentation/providers/fasting_provider.dart';
 import 'package:intermittent_fasting/presentation/providers/history_provider.dart';
 import 'package:intermittent_fasting/presentation/widget/common/timer_row_container.dart';
@@ -8,13 +9,13 @@ import 'package:provider/provider.dart';
 import 'package:jelly_anim/jelly_anim.dart';
 
 class CompleteScreen extends StatelessWidget {
-  CompleteScreen({Key? key}) : super(key: key);
+  CompleteScreen({Key? key, required this.fastingTime}) : super(key: key);
 
   final TextEditingController controller = TextEditingController();
+  final FastingTime fastingTime;
 
   @override
   Widget build(BuildContext context) {
-    final fastingTime = context.read<FastingProvider>().fastingTime;
     final isFastingTimeDone = fastingTime.isFasting;
 
     return Scaffold(
@@ -74,11 +75,9 @@ class CompleteScreen extends StatelessWidget {
                 )),
                 GestureDetector(
                   onTap: () async {
-                    context.read<FastingProvider>().endTimeSet();
                     if (isFastingTimeDone) {
-                      context
-                          .read<HistoryProvider>()
-                          .addHistory(fastingTime, DateTime.now().toString());
+                      context.read<HistoryProvider>().addHistory(
+                          fastingTime.copyWith(), DateTime.now().toString());
                     } else if (!isFastingTimeDone &&
                         controller.text.isNotEmpty) {
                       final id = PrefsUtils.getInt(PrefsUtils.nowEatHistoryId);
@@ -86,6 +85,7 @@ class CompleteScreen extends StatelessWidget {
                           .read<HistoryProvider>()
                           .updateHistoryMemo(id, controller.text);
                     }
+                    context.read<FastingProvider>().endTimeSet();
                     Navigator.pop(context);
                   },
                   child: Container(

@@ -81,7 +81,9 @@ class ButtonTab extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CompleteScreen()));
+                          builder: (context) => CompleteScreen(
+                                fastingTime: fastingTime,
+                              )));
                 }
               },
               child: Container(

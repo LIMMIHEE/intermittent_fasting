@@ -14,11 +14,14 @@ class HistoryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HistoryProvider>(
-      builder: (BuildContext context, HistoryProvider fastingHistory,
+      builder: (BuildContext context, HistoryProvider historyProvider,
           Widget? child) {
-        if (fastingHistory.list.isEmpty) {
+        if (historyProvider.list.isEmpty) {
           return const NoHistoryView();
         }
+
+        final historyList = historyProvider.list;
+        historyList.sort((b, a) => a.id.compareTo(b.id));
 
         return Container(
           color: DesignSystem.colors.backgroundWhite,
@@ -27,9 +30,9 @@ class HistoryListView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const AccumulatedDateText(),
+                AccumulatedDateText(historyLength: historyList.length),
                 const HistoryTopLabel(),
-                fastingHistory.list.isEmpty
+                historyList.isEmpty
                     ? Expanded(
                         child: Center(
                           child: Text(
@@ -45,14 +48,13 @@ class HistoryListView extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
-                        itemCount: fastingHistory.list.length,
+                        itemCount: historyList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final history = fastingHistory.list[index];
+                          final history = historyList[index];
                           return Padding(
                             padding: EdgeInsets.only(
-                                bottom: fastingHistory.list.length - 1 == index
-                                    ? 120
-                                    : 0),
+                                bottom:
+                                    historyList.length - 1 == index ? 120 : 0),
                             child: InkWell(
                               onTap: () {
                                 showModalBottomSheet<void>(

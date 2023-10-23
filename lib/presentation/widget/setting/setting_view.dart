@@ -18,77 +18,78 @@ class SettingView extends StatelessWidget {
         context.select((SettingProvider data) => data.isDarkMode);
     return Scaffold(
       backgroundColor: DesignSystem.colors.backgroundWhite,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const AccumulatedDateText(),
-          SettingRow(
-            children: [
-              Expanded(
-                child: Text(
-                  '다크모드',
-                  style: DesignSystem.typography.body2(),
-                ),
-              ),
-              Transform.scale(
-                scale: 0.85,
-                child: CupertinoSwitch(
-                  activeColor: DesignSystem.colors.black,
-                  value: isDarkMode,
-                  onChanged: (value) {
-                    context.read<SettingProvider>().changeTheme(value);
-                  },
-                ),
-              ),
-            ],
-          ),
-          InkWell(
-            onTap: () {
-              launchUrl(Uri.parse('https://forms.gle/RewNYJtwaZNuPZkH9'));
-            },
-            child: SettingRow(
-              isLast: true,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SettingRow(
               children: [
                 Expanded(
                   child: Text(
-                    '의견 보내기',
+                    '다크모드',
                     style: DesignSystem.typography.body2(),
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 18,
-                  color: DesignSystem.colors.gray700,
+                Transform.scale(
+                  scale: 0.85,
+                  child: CupertinoSwitch(
+                    activeColor: DesignSystem.colors.black,
+                    value: isDarkMode,
+                    onChanged: (value) {
+                      context.read<SettingProvider>().changeTheme(value);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            InkWell(
+              onTap: () {
+                launchUrl(Uri.parse('https://forms.gle/RewNYJtwaZNuPZkH9'));
+              },
+              child: SettingRow(
+                isLast: true,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '의견 보내기',
+                      style: DesignSystem.typography.body2(),
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 18,
+                    color: DesignSystem.colors.gray700,
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 72,
+            ),
+            SettingRow(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Utils.showDeleteDialog(context, () {
+                      context.read<SettingProvider>().allDataClear(() {
+                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const StartScreen()),
+                            (route) => false);
+                      });
+                    });
+                  },
+                  child: Text(
+                    '모든 데이터 삭제하기',
+                    style: TextStyle(color: DesignSystem.colors.deleteRed),
+                  ),
                 )
               ],
             ),
-          ),
-          const SizedBox(
-            height: 72,
-          ),
-          SettingRow(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Utils.showDeleteDialog(context, () {
-                    context.read<SettingProvider>().allDataClear(() {
-                      Navigator.pop(context);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const StartScreen()),
-                          (route) => false);
-                    });
-                  });
-                },
-                child: Text(
-                  '모든 데이터 삭제하기',
-                  style: TextStyle(color: DesignSystem.colors.deleteRed),
-                ),
-              )
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

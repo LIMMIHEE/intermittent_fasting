@@ -14,10 +14,13 @@ class AnalysisFastingChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HistoryProvider>(builder:
-        (BuildContext context, HistoryProvider fastingHistory, Widget? child) {
-      if (fastingHistory.list.isEmpty) {
+        (BuildContext context, HistoryProvider historyProvider, Widget? child) {
+      if (historyProvider.list.isEmpty) {
         return const NoHistoryView();
       }
+
+      final historyList = historyProvider.list;
+      historyList.sort((a, b) => a.id.compareTo(b.id));
 
       return AspectRatio(
         aspectRatio: 1,
@@ -26,11 +29,11 @@ class AnalysisFastingChart extends StatelessWidget {
           child: BarChart(
             BarChartData(
               barTouchData: barTouchData,
-              titlesData: titlesData(fastingHistory.list),
+              titlesData: titlesData(historyList),
               borderData: borderData,
-              barGroups: barGroups(fastingHistory.list.length > 6
-                  ? fastingHistory.list.sublist(0, 7)
-                  : fastingHistory.list),
+              barGroups: barGroups(historyList.length > 6
+                  ? historyList.sublist(0, 7)
+                  : historyList),
               gridData: const FlGridData(show: false),
               alignment: BarChartAlignment.spaceAround,
             ),

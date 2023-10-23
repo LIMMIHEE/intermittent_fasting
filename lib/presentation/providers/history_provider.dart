@@ -20,8 +20,10 @@ class HistoryProvider extends ChangeNotifier {
     _list = [];
   }
 
-  void addHistory(FastingTime fastingTime, String endTime) {
+  Future<void> addHistory(FastingTime fastingTime, String endTime) async {
+    final lastHistory = await SQLiteHelper.getLastHistory();
     final newHistory = History(
+        id: lastHistory.id + 1,
         startDate: fastingTime.startTime.toString(),
         endDate: endTime,
         fastingRatio: fastingTime.fastingRatio,
@@ -60,7 +62,6 @@ class HistoryProvider extends ChangeNotifier {
   }
 
   void _notify() {
-    _list.sort((b, a) => a.id.compareTo(b.id));
     _list = [..._list];
     notifyListeners();
   }
