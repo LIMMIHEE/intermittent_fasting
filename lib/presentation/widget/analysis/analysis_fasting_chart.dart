@@ -14,19 +14,15 @@ class AnalysisFastingChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: BarChart(
-          BarChartData(
-            barTouchData: barTouchData,
-            titlesData: titlesData(historyList),
-            borderData: borderData,
-            barGroups: barGroups(historyList.length > 6
-                ? historyList.sublist(0, 7)
-                : historyList),
-            gridData: const FlGridData(show: false),
-            alignment: BarChartAlignment.spaceAround,
-          ),
+      child: BarChart(
+        BarChartData(
+          barTouchData: barTouchData,
+          titlesData: titlesData(historyList),
+          borderData: borderData,
+          barGroups: barGroups(
+              historyList.length > 6 ? historyList.sublist(0, 7) : historyList),
+          gridData: const FlGridData(show: false),
+          alignment: BarChartAlignment.spaceAround,
         ),
       ),
     );

@@ -17,6 +17,7 @@ abstract class _LightScheme {
   static const Color shadow = Color(0x0C000000);
   static const Color clearYellow = Color(0xffFFF1D5);
   static const Color textPrimary = Color(0xFF392E5C);
+  static const Color divider = Color(0xFFC9C9C9);
   static const Color backgroundWhite = Color(0xFFFFFFFF);
 }
 
@@ -35,6 +36,7 @@ abstract class _DarkScheme {
   static const Color shadow = Color(0x0cffffff);
   static const Color clearYellow = Color(0xff544d42);
   static const Color textPrimary = Color(0xFF392E5C);
+  static const Color divider = Color(0xFFC9C9C9);
   static const Color backgroundWhite = Color(0xFF171326);
 }
 
@@ -94,6 +96,10 @@ class Colors {
   Color get backgroundClearYellow => Config.isLightTheme()
       ? _LightScheme.clearYellow
       : _DarkScheme.clearYellow;
+
+  //divider
+  Color get divider =>
+      Config.isLightTheme() ? _LightScheme.divider : _DarkScheme.divider;
 
   //shadow
   Color get shadow =>
