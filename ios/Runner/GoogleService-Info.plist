@@ -2,35 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>617101945828-iq9qkcgg8sf7ei4do8hn027dj2hh1g84.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.617101945828-iq9qkcgg8sf7ei4do8hn027dj2hh1g84</string>
-	<key>API_KEY</key>
-	<string>AIzaSyC6Wl3CqGl-CcqyC5tOSgy5mhyr8HEIbXE</string>
-	<key>GCM_SENDER_ID</key>
-	<string>617101945828</string>
-	<key>PLIST_VERSION</key>
-	<string>1</string>
-	<key>BUNDLE_ID</key>
-	<string>com.mirimhee.intermittentfasting.intermittentFasting</string>
-	<key>PROJECT_ID</key>
-	<string>intermittent-fasting-b72f4</string>
-	<key>STORAGE_BUCKET</key>
-	<string>intermittent-fasting-b72f4.appspot.com</string>
-	<key>IS_ADS_ENABLED</key>
-	<false></false>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
-	<key>IS_GCM_ENABLED</key>
-	<true></true>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
-	<key>GOOGLE_APP_ID</key>
-	<string>1:617101945828:ios:f4e2d5d4aa1545d1cc75f1</string>
-	<key>DATABASE_URL</key>
-	<string>https://intermittent-fasting-b72f4-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+
 </dict>
 </plist>

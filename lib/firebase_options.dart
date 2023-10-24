@@ -45,39 +45,4 @@ class DefaultFirebaseOptions {
         );
     }
   }
-
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAaSR_UKEdhV9AhfVOXVKGX1OaNi2urhOU',
-    appId: '1:617101945828:web:adc6b7d7d5836e49cc75f1',
-    messagingSenderId: '617101945828',
-    projectId: 'intermittent-fasting-b72f4',
-    authDomain: 'intermittent-fasting-b72f4.firebaseapp.com',
-    databaseURL:
-        'https://intermittent-fasting-b72f4-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'intermittent-fasting-b72f4.appspot.com',
-    measurementId: 'G-JR3B3JVCWS',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD-h_uL9rYKwEjFnyiuD0UX37JbnkDu0ko',
-    appId: '1:617101945828:android:15975fb9aa29f57acc75f1',
-    messagingSenderId: '617101945828',
-    projectId: 'intermittent-fasting-b72f4',
-    databaseURL:
-        'https://intermittent-fasting-b72f4-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'intermittent-fasting-b72f4.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC6Wl3CqGl-CcqyC5tOSgy5mhyr8HEIbXE',
-    appId: '1:617101945828:ios:f4e2d5d4aa1545d1cc75f1',
-    messagingSenderId: '617101945828',
-    projectId: 'intermittent-fasting-b72f4',
-    databaseURL:
-        'https://intermittent-fasting-b72f4-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'intermittent-fasting-b72f4.appspot.com',
-    iosClientId:
-        '617101945828-iq9qkcgg8sf7ei4do8hn027dj2hh1g84.apps.googleusercontent.com',
-    iosBundleId: 'com.mirimhee.intermittentfasting.intermittentFasting',
-  );
 }
