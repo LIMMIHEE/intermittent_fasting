@@ -85,11 +85,10 @@ class AnalysisFastingChart extends StatelessWidget {
         final fastingTime = DateTime.parse(history.endDate)
             .difference(DateTime.parse(history.startDate));
 
-        String twoDigits(int n) => n.toString().padLeft(2, "0");
-        String minutes = twoDigits(fastingTime.inHours.remainder(60).abs());
-        String seconds = twoDigits(fastingTime.inMinutes.remainder(60).abs());
-
-        final parseTime = double.parse('$minutes.$seconds');
+        int hours = fastingTime.inHours;
+        int minutes = fastingTime.inMinutes - (fastingTime.inHours * 60);
+        final parseTime = double.parse('$hours.'
+            '${minutes < 10 ? "0$minutes" : minutes}');
 
         return BarChartGroupData(
           x: i,
