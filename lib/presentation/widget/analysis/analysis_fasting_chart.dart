@@ -41,7 +41,7 @@ class AnalysisFastingChart extends StatelessWidget {
             int rodIndex,
           ) {
             return BarTooltipItem(
-              rod.toY.toString(),
+              rod.toY.toStringAsFixed(2),
               DesignSystem.typography.title1(TextStyle(
                   color: DesignSystem.colors.textPrimary,
                   fontWeight: FontWeight.w700)),

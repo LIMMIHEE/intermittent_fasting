@@ -71,7 +71,7 @@ class AnalysisView extends StatelessWidget {
                       AnalysisInfoRow(
                         title: '평균 공복 시간',
                         subTitle: '최신 7가지 기록 기준',
-                        result: '${fastingTimeAverage(context)}시간',
+                        result: '${fastingTimeAverage(context).floor()}시간',
                         isAchievementInfo: false,
                       )
                     ],
@@ -104,7 +104,7 @@ class AnalysisView extends StatelessWidget {
       totalTime += timeDifference(history);
     }
 
-    return (totalTime / 60) / historyList.length;
+    return ((totalTime / 60) / historyList.length);
   }
 
   List<History> getHistory(BuildContext context) {
