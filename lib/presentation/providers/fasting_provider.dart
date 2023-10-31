@@ -56,9 +56,12 @@ class FastingProvider extends ChangeNotifier {
 
   void setTargetTime() {
     final fastingRatio = _fastingTime.fastingRatio;
-    final hourString = fastingRatio.contains(":")
+    String hourString = fastingRatio.contains(":")
         ? fastingRatio.split(":").elementAt(_fastingTime.isFasting ? 0 : 1)
         : fastingRatio;
+    if (hourString.contains("시간")) {
+      hourString = hourString.replaceAll("시간", '');
+    }
 
     _fastingTime.targetTime = Duration(hours: int.parse(hourString)).inSeconds;
     _saveNotify();

@@ -91,7 +91,11 @@ class AnalysisView extends StatelessWidget {
     int fastingTime = 0;
 
     for (var history in historyList) {
-      fastingTime += int.parse(history.fastingRatio.split(":").first);
+      if (history.fastingRatio.contains('시간')) {
+        fastingTime += int.parse(history.fastingRatio.replaceAll('시간', ''));
+      } else {
+        fastingTime += int.parse(history.fastingRatio.split(":").first);
+      }
     }
     return 1 +
         ((timeAverage - (fastingTime / historyList.length)).abs()).round();
