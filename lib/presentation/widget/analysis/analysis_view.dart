@@ -97,8 +97,9 @@ class AnalysisView extends StatelessWidget {
         fastingTime += int.parse(history.fastingRatio.split(":").first);
       }
     }
-    return 1 +
-        ((timeAverage - (fastingTime / historyList.length)).abs()).round();
+
+    return ((timeAverage / (fastingTime / historyList.length)).abs() * 100)
+        .round();
   }
 
   double fastingTimeAverage(BuildContext context) {
