@@ -42,7 +42,7 @@ class WelcomeView extends StatelessWidget {
               children: [
                 StartButton(
                   childWidget: Text(
-                    '앱으로만 사용할래요',
+                    '시작하기',
                     style: DesignSystem.typography.body(TextStyle(
                       color: DesignSystem.colors.white,
                       fontWeight: FontWeight.w600,
@@ -50,29 +50,29 @@ class WelcomeView extends StatelessWidget {
                   ),
                   onTap: () => onTap("fastingSet"),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: StartButton(
-                    childWidget: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '웹으로도 사용할래요',
-                          style: DesignSystem.typography.body(),
-                        ),
-                        Text(
-                          '회원가입이 필요합니다',
-                          style: DesignSystem.typography.caption1(TextStyle(
-                            color: DesignSystem.colors.gray700,
-                            fontWeight: FontWeight.w400,
-                          )),
-                        )
-                      ],
-                    ),
-                    isOutlineWidget: true,
-                    onTap: () => onTap("signUp"),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 8),
+                //   child: StartButton(
+                //     childWidget: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Text(
+                //           '웹으로도 사용할래요',
+                //           style: DesignSystem.typography.body(),
+                //         ),
+                //         Text(
+                //           '회원가입이 필요합니다',
+                //           style: DesignSystem.typography.caption1(TextStyle(
+                //             color: DesignSystem.colors.gray700,
+                //             fontWeight: FontWeight.w400,
+                //           )),
+                //         )
+                //       ],
+                //     ),
+                //     isOutlineWidget: true,
+                //     onTap: () => onTap("signUp"),
+                //   ),
+                // ),
               ],
             )
           ],
