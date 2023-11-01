@@ -1,13 +1,10 @@
 # 간헐적 단식 어플
-<br/>
-<br/>
 
 
 ### 🔗 Link
 
-| Github | Figma |
+| [📍 GitHub](https://github.com/LIMMIHEE/intermittent_fasting) | [🎨 Figma](https://www.figma.com/file/d4DQJV3AOz3e003xTfCtz2/%EA%B0%84%ED%97%90%EC%A0%81-%EB%8B%A8%EC%8B%9D-%EC%96%B4%ED%94%8C-%EB%94%94%EC%9E%90%EC%9D%B8?type=design&node-id=0%3A1&mode=design&t=9ZgwMqcWumKCuW9l-1) |
 | --- | --- |
-| https://github.com/LIMMIHEE/u-philosophy | https://www.figma.com/file/I3xqjvp7U8EGRnVFpdf1Kb/%EC%B2%A0%ED%95%99-%EC%96%B4%ED%94%8C-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%95%88?type=design&node-id=0%3A1&t=kiPXyPYLQ080d2SI-1 |
 
 <br/>
 <br/>
